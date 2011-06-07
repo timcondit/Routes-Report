@@ -1,0 +1,424 @@
+\documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
+\usepackage{todonotes}
+
+%\include{routes_chapter_introduction.tex}
+%\include{routes_chapter_relatedwork.tex}
+%\include{routes_chapter_implementation.tex}
+%\include{routes_chapter_results.tex}
+%\include{routes_chapter_conclusion}
+%\includeonly{routes_chapter_conclusion}
+
+\begin{document}
+\title{Routes: A Multiagent Taxi Simulation}
+\author{Tim Condit}
+\date{\today}
+\maketitle
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%% abstract
+\begin{abstract}
+Routes is a multiagent simulation of a Taxi service and its Fares. All Taxis are created at the beginning of the simulation. While the program is running, Fares enter the system at random times in random places. Rather than requesting pickup through a central dispatch, the Fares broadcast their own locations locally, then regionally, and finally throughout the entire area, if needed. Starting with the local region, all Taxis in a given range receive the Fare's pickup request and may decide to act on it, or they may ignore it, depending on their circumstances and the type of simulation being run.
+
+Functional transit maps are generated in real-time from Census Bureau data that includes the entire United States of America and territories. The size of the transit map, and hence the simulation's range can be as small as a single area code, up to an entire county. The data that is downloaded to generate the transit map is processed locally the first time it's used, and cached to save time (and bandwidth) for subsequent runs.
+
+\todo{Add something here about the transit map being a big network graph. Can probably pull something directly out of the full text.}
+
+There are three different negotiation protocols - first-in, first-out, closest Fare, and mixed mode. There are two simulation types - cooperative and competitive. They are combined for a total of six different simulations.
+\end{abstract}
+
+
+%% introduction
+\chapter{Introduction}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% related work
+\chapter{RelatedWork}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% implementation
+\chapter{Implementation}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% results
+\chapter{Results}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% conclusion
+\chapter{Conclusion}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% appendices
+\appendix
+\chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+\chapter{Annotated Config Files}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+\chapter{List of Open Source Software}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+\chapter{Source Code}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+\chapter{Transcript of Interactive Session}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+Duis ut sapien.
+Proin sit amet magna et est pharetra vestibulum.
+Pellentesque sed diam et erat sollicitudin pharetra.
+Suspendisse potenti.
+Sed fringilla sagittis urna.
+Morbi ullamcorper aliquet leo.
+Donec elit nunc, rutrum at, ultrices at, pretium a, est.
+Etiam non dolor non enim malesuada condimentum.
+Curabitur vitae sapien.
+Nulla neque.
+
+Donec odio nibh, varius in, dictum nec, egestas in, nisl.
+Mauris varius mi non nunc.
+Praesent porta enim in nibh.
+Donec ac mi varius ante malesuada dignissim.
+Nunc aliquet tortor ac lectus.
+Sed pede.
+Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
+Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
+Duis ullamcorper molestie mauris.
+Sed eu ipsum nec eros luctus elementum.
+Suspendisse ultrices sollicitudin nunc.
+
+
+%% bibliography
+\bibliographystyle{plain}
+\bibliography{agents}
+
+\end{document}
