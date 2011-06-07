@@ -1,24 +1,26 @@
+% preliminaries %
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
 \usepackage{todonotes}
 
-%\include{routes_chapter_introduction.tex}
-%\include{routes_chapter_relatedwork.tex}
-%\include{routes_chapter_implementation.tex}
-%\include{routes_chapter_results.tex}
-%\include{routes_chapter_conclusion}
-%\includeonly{routes_chapter_conclusion}
 
+% front matter %
 \begin{document}
 \title{Routes: A Multiagent Taxi Simulation}
 \author{Tim Condit}
 \date{\today}
 \maketitle
+\thispagestyle{empty}
+
+% use roman numerals for the front matter %
+\pagestyle{headings}
+\setcounter{page}{1}
+\pagenumbering{roman}
 
 \tableofcontents
 \listoffigures
 \listoftables
 
-%% abstract
+% abstract %
 \begin{abstract}
 Routes is a multiagent simulation of a Taxi service and its Fares. All Taxis are created at the beginning of the simulation. While the program is running, Fares enter the system at random times in random places. Rather than requesting pickup through a central dispatch, the Fares broadcast their own locations locally, then regionally, and finally throughout the entire area, if needed. Starting with the local region, all Taxis in a given range receive the Fare's pickup request and may decide to act on it, or they may ignore it, depending on their circumstances and the type of simulation being run.
 
@@ -29,8 +31,11 @@ Functional transit maps are generated in real-time from Census Bureau data that 
 There are three different negotiation protocols - first-in, first-out, closest Fare, and mixed mode. There are two simulation types - cooperative and competitive. They are combined for a total of six different simulations.
 \end{abstract}
 
+% switch to Arabic numbers for the body - and restart the page count %
+\setcounter{page}{1}
+\pagenumbering{arabic}
 
-%% introduction
+% introduction %
 \chapter{Introduction}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
@@ -69,7 +74,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% related work
+% related work %
 \chapter{RelatedWork}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
@@ -108,7 +113,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% implementation
+% implementation %
 \chapter{Implementation}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
@@ -147,7 +152,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% results
+% results %
 \chapter{Results}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
@@ -186,7 +191,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% conclusion
+% conclusion %
 \chapter{Conclusion}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
@@ -225,7 +230,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% appendices
+% appendices %
 \appendix
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
@@ -417,7 +422,7 @@ Sed eu ipsum nec eros luctus elementum.
 Suspendisse ultrices sollicitudin nunc.
 
 
-%% bibliography
+% bibliography %
 \bibliographystyle{plain}
 \bibliography{agents}
 
