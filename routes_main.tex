@@ -1,7 +1,10 @@
 % preliminaries %
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
-\usepackage{todonotes}
 
+%\usepackage[dvips,bookmarks,colorlinks=false,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
+\usepackage[bookmarks,colorlinks=false,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
+\hypersetup{backref,pdfpagemode=FullScreen,colorlinks=true}
+\usepackage{todonotes}
 
 % front matter %
 \begin{document}
@@ -11,12 +14,15 @@
 \maketitle
 \thispagestyle{empty}
 
+\hyphenation{great-er}
+
 % use roman numerals for the front matter %
 \pagestyle{headings}
 \setcounter{page}{1}
 \pagenumbering{roman}
 
 \tableofcontents
+\todo{add hyperlinks}
 \listoffigures
 \listoftables
 
@@ -37,41 +43,70 @@ There are three different negotiation protocols - first-in, first-out, closest F
 
 % introduction %
 \chapter{Introduction}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
-Praesent tortor.
-In fringilla feugiat nisi.
-Fusce a elit.
-Maecenas placerat facilisis magna.
-Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
-In eget lacus.
-Pellentesque mauris.
-Sed vestibulum quam ac mauris.
-Donec vehicula risus.
-Maecenas vitae arcu quis tellus fringilla porttitor.
-Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+Routes is a simulation of a taxi service. 
+Taxi services have operated the same way for many years. Wherever they operate, it is common to get a ride by flagging down a taxi from the side of the road. Most taxi companies also have dispatchers who will arrange pickup at a later time.
+\footnote{A notable exception is New York City, where a fare cannot be prearranged. Only for-hire vehicles such as livery cars or limousines may prearrange pickup.{\hyperlink{http://www.nyc.gov/html/tlc/downloads/pdf/fhv_base_fact_sheet.pdf}{Understanding the For-Hire Vehicle Industry}}
+\hyperlink{http://www.nyc.gov/html/tlc/html/passenger/faq_pass.shtml\#14}{How can I pre-arrange a trip in a Yellow Cab?}}
+\todo{the hyperlinks below are broken}
 
-Duis ut sapien.
-Proin sit amet magna et est pharetra vestibulum.
-Pellentesque sed diam et erat sollicitudin pharetra.
-Suspendisse potenti.
-Sed fringilla sagittis urna.
-Morbi ullamcorper aliquet leo.
-Donec elit nunc, rutrum at, ultrices at, pretium a, est.
-Etiam non dolor non enim malesuada condimentum.
-Curabitur vitae sapien.
-Nulla neque.
+Taxi services are subject to extensive regulation, and are in some ways similar to a public utility.
+\footnote{This site documents legal actions and taxi regulations all over the world:{\hyperlink{http://www.taxi-library.org/regulation.htm}{Regulation of Taxicabs}}}
 
-Donec odio nibh, varius in, dictum nec, egestas in, nisl.
-Mauris varius mi non nunc.
-Praesent porta enim in nibh.
-Donec ac mi varius ante malesuada dignissim.
-Nunc aliquet tortor ac lectus.
-Sed pede.
-Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
-Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
-Duis ullamcorper molestie mauris.
-Sed eu ipsum nec eros luctus elementum.
-Suspendisse ultrices sollicitudin nunc.
+For example, the rates charged by municipal taxi services are often set by the city or county in which the taxis operate. This means that among other things, they cannot compete on price, since they are all forced to charge the same rates for the same trips.
+
+The simulations presented in this paper have none of these restrictions. They are closer to a loose confederation of independent drivers than to a highly regulated municipal utility. They are missing a couple key features of terrestrial taxis. First, they cannot be flagged down for a pickup. If they are not on their way to pick up a Fare, or driving the Fare to it's destination, they are not moving. Second, they do not have a dispatcher. This is a key component. They operate in a distributed fashion, with the Fare initiating contact with the Taxis directly, and - in the cooperative simulations anyway - the Taxis communicating amongst themselves about which one will pick up a given Fare.
+
+They ask and try to answer the following questions:
+\begin{itemize}
+  \item{Is an autonomous, distributed Taxi system technically feasible, at least conceptually?  How would it work?}
+  \item{How would the dynamic change when Agents (Fares and Taxis) communicate with each other directly?}
+  \item{Would a Fare be willing to wait a little longer for a better price?  (This implies that the now hidden cost of driving to a Fare is explicitly included in the cost of the fare, since without the cost of making the pickup there is no chance to earn the revenue of the trip.)}
+  \item{What would happen if both the Taxi and the Fare had to be satisfied that the trip was worthwhile?  And what if as a result of these constraints, some Fares get no service?}
+  \item{What would happen if Taxis had to compete for Fares with their fellows?  Would this improve service for all?  Or would a cooperative model work better at the team or organization level?}
+  \item{What would happen if two teams of Taxis competed with each other?  In other words, the Taxis of two teams A and B would coordinate Fare pickup amongst themselves, but they’d be competing with the other team, and will lose some of the Fares.  Would the results be much different at the system level than what happens when it’s "every man for himself"?}
+\end{itemize}
+
+But mostly this is a paper that explores the use of autonomous agents. They are characterized this way in \cite{roozemond2000act}, in a section called "What are intelligent agents?":
+
+%\vspace{7.2pt}
+\quote{Multi-Agent Systems can be characterised by the interaction of many agents trying to solve a variety of problems in a cooperative fashion.  Besides AI, intelligent agents should have some additional attributes to solve problems by itself in real-time; understand information; have goals and intentions; draw distinctions between situations; generalise; synthesise new concepts and/or ideas; model the world they operate in and plan and predict consequences of actions and evaluate alternatives.  The problem solving component of an intelligent agent can be a rule-based system but can also be a neural network or a fuzzy expert system.}
+%\vspace{7.2pt}
+
+The Agents in this series of simulations meet most of these criteria. In half the simulations the Agents work together in a cooperative fashion - in the other half, they are competitive; they are able to solve problems by themselves in real-time; they understand Fare requests for pickup (information); they have goals and intentions; and they draw distinctions between situations to determine whether to reserve (or compete for) a particular Fare. They don't do much generalizing or synthesizing of new concepts, but they do model the world in which they operate, and predict the consequences of their actions and act accordingly.
+
+The Agents are Taxis and Fares, but in another context they may have been viruses and antibodies, or cowboys and indians. Both may draw attention away from the simulations, in different directions: viruses and antibodies may be too complex, and cowboys and indians may be too simple. Taxi services in the real world do not have many competitive freedoms. The main goal of all the regulation seems to be about providing a reliable service with predictable prices. Those are fine goals, but the simulations in this paper step outside those boundaries, and explore what would happen if things were allowed to evolve differently.
+
+The higher priority for this paper was flexibility in designing the negotiation protocols and simulations. Taxis and Fares are not the only choice of autonomous agents to study, but they serve the purpose well.
+% that last bit sounds like it belongs in the conclusion
+
+\section{Definition of Terms}
+The following terms are used throughout the paper:
+
+\section{Organization}
+The rest of the paper consists of the following sections:
+
+\begin{itemize}
+  \item{RELATED WORK is a review of the literature.  Research on taxis as autonomous agents is scarce, but there are traffic and road network simulations that come at the issue from a different direction.  Instead of looking at a system of mobile agents, stationary agents at traffic lights provide information for improving the flow of traffic or routing around accidents and congestion.  The Belief-Desire-Intention model of intelligent agents is reviewed, and the Routes agents are categorized within a framework for organizing classes of multi-agent systems for transport logistics.  (This is not directly related, unless people are considered goods to transport, but it clarifies a few things about the agents nevertheless.)}
+  \item{IMPLEMENTATION describes the Taxis and Fares in \linebreak greater detail.  It explains the grids and graphs that make up the Agent's world, and the network traversal algorithms that calculate routes around the different regions.  It expands on the negotiation protocols and simulation types.  Finally it describes the simulation software that drives the whole process, the extensive run-time configuration options, and the interactive environment within which the simulations are executed.}
+  \item{RESULTS tells the story of the simulations. Individual Agents have autonomy during runtime, but from a simulation point of view, the agents are part of larger system.  Several simulations are run and their data plotted and reported here.}
+  \item{CONCLUSION brings things to a close, and enumerates a number of possible future enhancements.  There are a number of ways this program could be expanded upon, and the source code will be freely available upon acceptance of this report.}
+  \item{APPENDIX A: USING TIGER/LINE DATA describes how raw data from the U.S. Census Bureau, representing roads throughout the United States and it's territories, is converted in real-time into line segments, and how those line segments are knit together to make network graphs upon which the simulations are run.}
+  \item{APPENDIX B: ANNOTATED CONFIG FILES enumerates the large collection of both agent and graph data that can be customized at run-time, including full annotations about each setting.}
+  \item{APPENDIX C: LIST OF OPEN SOURCE SOFTWARE\ldots}
+  \item{APPENDIX D: SOURCE CODE\ldots}
+  \item{APPENDIX E: TRANSCRIPT OF INTERACTIVE SESSION\ldots}
+\end{itemize}
+
+\todo{get rid of these}
+\cite{davidsson2005aab}
+\cite{yokoo1999}
+
+% use this?
+% cite: http://en.wikipedia.org/wiki/Multi-agent_system, accessed 1/11/2009
+%
+% Autonomy: the agents are at least partially autonomous
+% Local views: no agent has a full global view of the system, or the system is too complex for an agent to make practical use of such knowledge
+% Decentralization: there is no one controlling agent (or the system is effectively reduced to a monolithic system)
 
 
 % related work %
