@@ -1,7 +1,7 @@
 % preliminaries %
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
 
-%\usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage[bookmarks,pdfpagemode=FullScreen,colorlinks=true,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
 \usepackage{todonotes}
@@ -59,8 +59,7 @@ Routes is a simulation of a taxi service.
 
 Taxi services have operated the same way for many years.
 Wherever they operate, it is common to get a ride by flagging down a taxi from the side of the road.
-Most taxi companies also have dispatchers who will arrange pickup at a later time.
-\footnote{A notable exception is New York City, where a fare cannot be prearranged.
+Most taxi companies also have dispatchers who will arrange pickup at a later time.\footnote{A notable exception is New York City, where a fare cannot be prearranged.
 Only for-hire vehicles such as livery cars or limousines may prearrange pickup.
 
 {\hyperlink{http://www.nyc.gov/html/tlc/downloads/pdf/fhv_base_fact_sheet.pdf}{Understanding the For-Hire Vehicle Industry}}
@@ -68,9 +67,7 @@ Only for-hire vehicles such as livery cars or limousines may prearrange pickup.
 
 \todo{the hyperlinks below are broken}
 
-Taxi services are subject to extensive regulation, and are in some ways similar to a public utility.
-
-\footnote{This site documents legal actions and taxi regulations all over the world: {\hyperlink{http://www.taxi-library.org/regulation.htm}{Regulation of Taxicabs}}}
+Taxi services are subject to extensive regulation, and are in some ways similar to a public utility.\footnote{This site documents legal actions and taxi regulations all over the world: {\hyperlink{http://www.taxi-library.org/regulation.htm}{Regulation of Taxicabs}}}
 
 For example, the rates charged by municipal taxi services are often set by the city or county in which the taxis operate.
 This means that among other things, they cannot compete on price, since they are all forced to charge the same rates for the same trips.
@@ -238,9 +235,7 @@ By this, he modifies the degree of autonomy of some agents, biasing the outcome 
 
 The agents choose local signal plans, but they still need to coordinate with one another to settle on a globally consistent signal plan.
 This is similar to the task of the coordinator agent in TRYS.
-To do this the agents use a distributed constraint optimization protocol
-\footnote{The original basis for my work, although it did not make it into the final product.}
-that implements weak commitment search\cite{yokoo1999}.
+To do this the agents use a distributed constraint optimization protocol\footnote{The original basis for my work, although it did not make it into the final product.} that implements weak commitment search\cite{yokoo1999}.
 \todo{This is referenced in Hernandez, but not in this paper.
 I should probably dig up the reference anyway.}
 
@@ -377,22 +372,228 @@ In \emph{decision making under risk}, both agents' beliefs and desires are prote
 Finally, with \emph{decision making under uncertainty}, neither agent knows anything about the other agent's beliefs or desires.
 Data collection is entirely speculative. See figure~\ref{fig:uncertainty-management} on page~\pageref{fig:uncertainty-management} for a summary.
 
+\begin{figure}[h]
+  \includegraphics{figures/uncertainty-management}
+  \caption{Modeling agents' interactions using BDI \& three types of decision making.}
+  \label{fig:uncertainty-management}
+\end{figure}
 
+\subsection{Comparison with Routes}
+By way of comparison, in my cooperative simulations, the Taxis communicate with the Fares soon after the initial pickup request is made.
+This is similar in practice to decision making under certainty, as both kinds of agents (or maybe more accurately, the agents with different goals) are communicating openly with one another.
+The Fare receives an acknowledgment before pickup, and the other Taxis are notified that a particular Fare is no longer eligible.
 
-% future reference?
+In my competitive simulations, the Taxis make decisions under something approximating risk in the Wu model.
+Whereas their system allows agents to share probability data with one another, in my system there are only a few decisions that a Taxi is likely to make, and they are made in private.
+When any two or more agents (Taxis) compete for a Fare, there will be exactly one winner, and all other competitors will lose that Fare.
+But until a Taxi announces publicly that he has reached the Fare first, all movement is private.
+Note also that the Fares do not communicate with one another, but only because it adds nothing to the simulation as designed.
+There are certainly enhancements where communication between potential Fares would raise their attractiveness to Taxis, thereby increasing their fitness for pickup, resulting in better (faster) responses from the Taxis.
+
+One additional note: although I have no plans currently to include it in this paper, I have run some Taxi "team" simulations with the current system.
+The Taxis in these simulations behave similarly to agents making decisions under risk.
+For any two agents, there are two possible scenarios: they are cooperating, meaning they are on the same “team”, or they are coordinating, meaning they are on different teams.
+Both scenarios assume a SimType of cooperative.
+A SimType of competitive does not make much sense here, since the Taxis would be competing with their teammates and with the Taxis on the other team or teams.
+The whole program would have to be modified to make a useful team competition.
+
+\subsection{Putting This Project Into Context}
+The last paper in this series is a review of agent-based approaches to transportation and traffic management.
+The authors have developed a classification system that is used to organize the large number of papers in the review.
+While the focus is primarily on logistics, I classify my work as it fits into their system.
+
+The article defines the concepts of logistics in some depth.
+Here they are talking about transport logistics, or the movement of goods from one place to another, often through multiple means, for example rail to ship to rail.
+The most succint definition of logistics that I found is "Logistics means having the right thing, at the right place, at the right time."\footnote{http://www.logisticsworld.com/logistics.htm}
+My system is neither a traffic management nor a logistics flow model, unless you consider the Fares as product to be moved from place to place.
+Nevertheless, there are parallels and the classification is enlightening.
+
+The evaluation framework consists of several pieces.
+The full list is shown in table~\ref{tab:transport-logistics-eval-framework}.
+Most of them will be clear from the context, but I will expand on some of them.
+Under \emph{Approach}$\to$\emph{Usage} are the categories Automation System and Decision support system (DSS).
+This is a recurring theme in multiagent logistics and traffic management systems.
+This is the first time I've seen the term automation system used to describe the alternative to DSS.
+It is defined as "having a self-acting mechanism that performs a required act at a predetermined time or in response to certain conditions."
+That's a reasonable, if general, description of my system.
+\emph{Approach}$\to$\emph{MAS structure} corresponds to the interactions of the agents, whether it is static, meaning the agents have the same roles throughout the simulation, or dynamic, where roles may change over time.
+\emph{Approach}$\to$\emph{Agent attitude} splits the agent interactions into two categories.
+All agents are classified as either benevolent (cooperative) or selfish (competitive).
+They do not make the distinction between cooperative and coordinative agents.
+In any event, my system includes both cooperative and competitive agents.
+
+\todo{Drop this paragraph?}
+The article mentions Multi Agent Based Simulations (MABS), a term that simply means that the agents in the simulation may have different roles, e.g. a company, a truck, a customer, etc.
+We've seen similar examples of this with the LTAs and CTAs in the France paper.
+My agents are designed similarly.
+But this is the first term I've found to describe agent partitioning based on role.
+
+The Taxis and Fares system is described according to the Davidsson classification scheme in table~\ref{tab:classifying-taxis-and-fares-sim}.
+All six simulation types are listed.
+Most of the data in the table is identical across all my simulations.
+This is maybe not surprising, since they are all part of the same system.
+The only difference is between the cooperative and competitive NPs: the cooperative simtypes are described as benevolent, and competitive as selfish.
+
+% Table generated by Excel2LaTeX from sheet 'txport-logistics-eval-framework'
+\begin{table}[htbp]
+  \centering
+    \begin{tabular}{|l|p{0.25\textwidth}|p{0.37\textwidth}|}
+    \addlinespace
+    \hline
+    %\toprule
+          & \textbf{Aspect} & \textbf{Categories} \\
+    %midrule
+    \hline
+    \hline
+    \textbf{Problem Description} & Domain & 1. Transport \\
+          &       & 2. Traffic \\
+          &       & 3. Terminal \\
+          %\hline
+          \cline{2-3}
+          & Transport mode & 1. Air \\
+          &       & 2. Rail \\
+          &       & 3. Road \\
+          &       & 4. Sea \\
+          &       & 5. Intermodal \\
+          %\hline
+          \cline{2-3}
+          & Time horizon & 1. Operational \\
+          &       & 2. Tactical \\
+          &       & 3. Strategical \\
+          \hline
+          %\cline{2-3}
+    \textbf{Approach} & Usage & 1. Automation system \\
+          &       & 2. Decision support system \\
+          %\hline
+          \cline{2-3}
+          & Control & 1. Centralized \\
+          &       & 2. Distributed \\
+          %\hline
+          \cline{2-3}
+          & MAS Structure & 1. Static \\
+          &       & 2. Dynamic \\
+          %\hline
+          \cline{2-3}
+          & Agent attitude & 1. Benevolent \\
+          &       & 2. Selfish \\
+          %\hline
+          \cline{2-3}
+          & Agent architecture & 1. Reactive \\
+          &       & 2. Deliberative \\
+          &       & 3. Hybrid \\
+          \hline
+          %\cline{2-3}
+    \textbf{Results} & Maturity & 1. Conceptual proposal \\
+          &       & 2. Simulation experiment \\
+          &       &   2.1. artificial data \\
+          &       &     2.1.1. limited/partial \\
+          &       &     2.1.2. full scale \\
+          &       &   2.2. real data \\
+          &       &     2.2.1. limited/partial \\
+          &       &     2.2.2. full scale \\
+          &       & 3. Field experiment \\
+          &       &   3.1. limited/partial \\
+          &       &   3.2. full scale \\
+          &       & 4. Deployed system \\
+          %\hline
+          \cline{2-3}
+          & Eval comparison & 1. None \\
+          &       & 2. Qualitative \\
+          &       & 3. Quantitative \\
+    %\bottomrule
+    \hline
+    \end{tabular}%
+  \caption{Summary of transportation logistics evaluation framework}
+  \label{tab:transport-logistics-eval-framework}%
+\end{table}%
+
+% Table generated by Excel2LaTeX from sheet 'classifying-taxis-and-fares-sim'
+\begin{table}[htbp]
+  \centering
+    \begin{tabular}{|l|p{0.26\textwidth}|p{0.18\textwidth}|p{0.18\textwidth}|p{0.18\textwidth}|}
+    %\begin{tabular}{|l|l|l|l|l|}
+    \addlinespace
+    \hline
+    %\toprule
+          %&       & \textbf{Cooperative/FIFO} & \textbf{Cooperative/CF} & \textbf{Cooperative/MM} \\
+          &       & \emph{\textbf{Coop/FIFO}} & \emph{\textbf{Coop/CF}} & \emph{\textbf{Coop/MM}} \\
+          \hline
+          \hline
+    %\midrule
+    \textbf{Problem Description} & Domain & Traffic & Traffic & Traffic \\
+          \cline{2-5}
+          & Transport mode & Road  & Road  & Road \\
+          \cline{2-5}
+          & Time horizon & Operational & Operational & Operational \\
+          \hline
+    \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
+          \cline{2-5}
+          & Control type & Distributed & Distributed & Distributed \\
+          \cline{2-5}
+          & MAS structure & Static & Static & Static \\
+          \cline{2-5}
+          & Agent attitude & Benevolent & Benevolent & Benevolent \\
+          \cline{2-5}
+          & Agent architecture & Reactive & Reactive & Reactive \\
+          \hline
+    \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
+          \cline{2-5}
+          & Eval comparison & Qualitative & Qualitative & Qualitative \\
+          \hline
+          \hline
+          \cline{2-5}
+          %\\[3pt]
+          %\vspace{4.8mm}
+%    \end{tabular}%
+%  \caption{Classifying the Taxis and Fares simulation, part 1}
+%\end{table}%
 %
-%\begin{figure}[htb]
-%\begin{center}
-%\leavevmode
-%\includegraphics[width=0.8\textwidth]{image.png}
-%\end{center}
-%\caption{Awesome Image}
-%\label{fig:awesome_image}
-%\end{figure}
+%\begin{table}[htbp]
+%  \centering
+%    %\begin{tabular}{|l|p{0.16\textwidth}|p{0.16\textwidth}|p{0.16\textwidth}|p{0.16\textwidth}|}
+%    \begin{tabular}{|l|l|l|l|l|}
+%    \addlinespace
+%    \hline
+%    %\toprule
+%          %&       & \textbf{Competitive/FIFO} & \textbf{Competitive/CF} & \textbf{Competitive/MM} \\
+          &       & \emph{\textbf{Comp/FIFO}} & \emph{\textbf{Comp/CF}} & \emph{\textbf{Comp/MM}} \\
+          \hline
+          \hline
+    \textbf{Problem Description} & Domain & Traffic & Traffic & Traffic \\
+          \cline{2-5}
+          & Transport mode & Road  & Road  & Road \\
+          \cline{2-5}
+          & Time horizon & Operational & Operational & Operational \\
+          \hline
+    \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
+          \cline{2-5}
+          & Control type & Distributed & Distributed & Distributed \\
+          \cline{2-5}
+          & MAS structure & Static & Static & Static \\
+          \cline{2-5}
+          & Agent attitude & Selfish & Selfish & Selfish \\
+          \cline{2-5}
+          & Agent architecture & Reactive & Reactive & Reactive \\
+          \hline
+    \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
+          \cline{2-5}
+          & Eval comparison & Qualitative & Qualitative & Qualitative \\
+    %\bottomrule
+    \hline
+    \end{tabular}%
+  \caption{Classifying the Taxis and Fares simulation}
+  \label{tab:classifying-taxis-and-fares-sim}%
+\end{table}%
+
+\todo{old comment: Modi - ADOPT: Asynchronous Distributed Constraint Optimization with Quality Guarantees}
+\todo{old comment: Mailler - Solving Distributed Constraint Optimization Problems Using Cooperative Mediation}
 
 
 % implementation %
 \chapter{Implementation}
+
+\todo{PICK UP HERE}
+
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
 In fringilla feugiat nisi.
