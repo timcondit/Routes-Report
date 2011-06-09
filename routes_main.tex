@@ -1,10 +1,9 @@
 % preliminaries %
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
 
+%\usepackage{amsmath}
 \usepackage{graphicx}
-%\usepackage[dvips,bookmarks,colorlinks=false,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
-\usepackage[bookmarks,colorlinks=false,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
-\hypersetup{backref,pdfpagemode=FullScreen,colorlinks=true}
+\usepackage[bookmarks,pdfpagemode=FullScreen,colorlinks=true,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
 \usepackage{todonotes}
 
 % front matter %
@@ -216,6 +215,12 @@ TRYSA$_{2}$ is a reformulation of TRYS using autonomous agents.
 Whereas TRYS uses a more linear form of communication between the traffic control agents and the coordinator, agents in TRYSA$_{2}$ communicate with one another directly, eliminating the need for a coordinator agent.
 See figure~\ref{fig:TRYS-and-TRYSA2} on page~\pageref{fig:TRYS-and-TRYSA2}.
 
+\begin{figure}[h]
+  \includegraphics{figures/TRYS-and-TRYSA2.PNG}
+  \caption{Centralized (TRYS) and decentralized coordination (TRYSA$_{2}$).}
+  \label{fig:TRYS-and-TRYSA2}
+\end{figure}
+
 The partitioning of the road network into problem areas is slightly different from that in TRYS, but problem detection, diagnosis and selection of control plans are similar.
 Each traffic control agent in TRYSA$_{2}$ maintains its own set of alternative traffic control plans, along with expected reductions in local traffic excesses associated with each of the plans.
 This is called the plan's local utility.
@@ -274,15 +279,105 @@ Local traffic agents (LTA) will typically have many alternative plans available,
 A major task is for the coordinator traffic agents (CTA) to quickly figure out which ones to drop from consideration.
 This was addressed in Hern\'{a}ndez, but real-time performance data was not provided.
 
-\todo{PICK UP HERE}
-
+The LTAs and the CTAs behave almost identically to the analogous agents in TRYS (see figure~\ref{fig:LTAs-and-CTA} on page~\pageref{fig:LTAs-and-CTA}).
+But this is a more general system that was not designed for a specific traffic network.
+It may be used on larger roadways where multiple CTAs are needed.
+In this case, a Global Traffic Agent (GTA) is added to the hierarchy, and all CTAs report to it.
+The LTAs do not communicate with each other, but only with their assigned CTAs.
+Likewise, if a traffic network is large enough that a GTA is needed, it is subdivided into regions controlled by a single CTA, with a top-level GTA linking the CTAs together.
+The final piece of the agent hierarchy is the Information Traffic Agent (ITA).
+As the name suggests, the ITA stores and distributes all information detailing the state of each intersection.
+Each LTA and CTA communicate directly with the ITA, but it does not process any data.
+Its only purpose it to store traffic data and provide immediate feedback to the other agents.
 
 \begin{figure}[h]
-  %\includegraphics[width=0.8\textwidth]{figures/TRYS-and-TRYSA2.PNG}
-  \includegraphics{figures/TRYS-and-TRYSA2.PNG}
-  \caption{Centralized (TRYS) and decentralized coordination (TRYSA$_{2}$).}
-  \label{fig:TRYS-and-TRYSA2}
+  \includegraphics{figures/LTAs-and-CTA}
+  \caption{Layout of Local and Coordinator Traffic Agents.}
+  \label{fig:LTAs-and-CTA}
 \end{figure}
+
+\todo{use a subfloat for the map and graph side-by-side images (whenever I get around to doing it)}
+
+When deciding on a traffic light pattern, most communication takes place between the LTAs and the CTAs, with the ITAs providing stored data as necessary.
+In order for the CTA to calculate a global optimum for a given intersection, it must collect data from all neighbors of that intersection's LTA.
+The ITA provides data about traffic levels, congestion, accidents, etc. at each of the intersections requested by the CTA.
+The CTA calculates a traffic light pattern and compares it to that proposed by the LTA.
+\todo{Do I need something here about the LTAs generating their own proposed traffic light pattern for review by the CTA?}
+If there is a significant difference between them, a balance between the local and global optimums must be reached, and communicated to the LTA\footnote{The authors do not describe how they negotiate this balance.}.
+Traffic sensors provide data to the ITAs.
+Collected data includes the current state of each traffic light, the direction of traffic movement, e.g. North heading North or West, or South going East, and the time remaining for the light in its current state.
+The LTAs include an expert system that uses this data to calculate a locally optimal light pattern, without regard to other intersections.
+Following this the LTA sends a message to the CTA, which may adjust the LTA's light pattern, based on the recommendation of its own expert system, to accomodate the needs of the global network.
+
+The communication protocols described earlier are also used by the CTAs to send real-time updates of events occuring within the system.
+The events described in this paper are traffic accidents and roadway congestion.
+Most events affect only a small number of LTAs, and only directly affected agents are notified of the events.
+
+An agent is considered affected by a traffic accident if the accident occurs at a neighboring intersection, a connecting roadway, or within agent's intersection.
+When an LTA is notified by the CTA that it is affected by a traffic accident\footnote{The CTA receives the notification manually from a human operator. In other words, this part of the application was not implemented at the time of publication.}, it overrides the state of the traffic light pattern provided by the CTA, for the duration of the event.
+Essentially, the agent regains its autonomy, and decides for itself what action to take during the disruption.
+Reading between the lines, it seems that the LTA recalculates its own local traffic light pattern, and uses that until further notice from the CTA.
+When the LTA is notified that the event has passed, the light returns to standard operation.
+
+In the case of traffic congestion at a neighboring intersection, the CTA will look for an alternate route to redirect incoming traffic.
+If none is found, the soon-to-be affected LTA is sent the red signal, effectively halting incoming traffic.
+If an alternate is found, the CTA will send a message to the LTA that is experiencing the congestion.
+The LTA will again override the traffic light pattern, but this time it is only for a single cycle of the traffic light pattern, after which it reverts to the pattern provided by the CTA.
+The CTA has the option to recall the pattern event, leaving the overridden pattern active at the LTA.
+This cycle could then be repeated by the CTA for as long as necessary, based on updated sensor data.
+
+\subsection{Comparison with Routes}
+By way of comparison with my work, this system is traffic network-oriented rather than agent-oriented.
+It is also more hierarchical, with little autonomy for agents.
+The LTAs are not allowed to communicate directly with one another.
+In larger systems with multiple CTAs, they are not allowed to communicate with one another either.
+On the other hand, this is an applied approach at solving a specific problem, rather than exploring the nature of agent-based simulations.
+The first priority here is to find something that works, whereas my system is geared toward exploration, with optimality a nice side-effect, but not the primary goal.
+
+\section{Cooperative and Competitive Multiagent Systems}
+Here we investigate coordination, cooperation and competition among software agents.
+
+\subsection{Extending the Belief-Desire-Intention Model}
+The Wu paper\cite{wu2003umf} develops a system for identifying agent uncertainty in relation to other agents in a MAS.
+They build upon the existing BDI (belief-desire-intention) agent model, adding
+a new attribute, KB (knowledge base), and attribute properties\todo{should I mention in a footnote that I use the terms properties and "state modifiers" interchangably?} public, private and protected.
+This enhanced model is intended for use within a decision support system.
+It gives individual agents a better understanding of their position relative to other agents.
+This should allow the agents to make better informed decisions.
+BDI is described here to put it into context as part of the overall definition of the uncertainty management framework.
+
+\emph{Belief} is the information available to an agent about the state of the environment.
+It is a frequently updated attribute described by the function \[\wp\emph{(Belief)}\times \emph{P}\to\wp\emph{(Belief)}\] where \emph{P} is the agent's current precept and current beliefs.
+\emph{Desire} is the set of options an agent can use to achieve its intentions.
+It is derived from the agent's belief and intentions and is described as \[\wp\emph{(Belief)}\times \wp\emph{(Intentions)}\to\wp\emph{(Desire)}\]
+The agent's \emph{intention} is simply what it wants to do or accomplish\footnote{This paper does not include a precise definition of intention}.
+The new piece, the \emph{knowledge base}, expands on the concept of the agent's intention.
+It is a database of related information on a particular subject that describes how to do a certain task.
+The four attributes in the extended BDI agent model are not sufficient to model an agent's relationships with its cohorts.
+The authors add three state modifiers -- public, private and protected -- to each of these attributes.
+Public properties are visible to all, while private properties are visible only to the agent.
+An attribute with protected properties, on the other hand, is one where its probability distribution is visible to others.
+
+Now we can describe the uncertainty management framework with respect to cooperation, coordination, and competition, and again, it starts with definitions.
+A cooperating agent in this system is defined one that reveals its beliefs, desires, intentions and knowledge base to others.
+In addition, all cooperating agents must have the same goal.
+Coordination is defined as revealing an agent's intentions and knowledge base to others, but the agents have differing goals.
+In loose competition an agent's goal is revealed, but not his knowledge base.
+In strict competition an agent reveals neither his goal or knowledge base.
+In either of the latter cases, the agent's beliefs and desires may be public, private or protected (this is a function of the how much uncertainty exists in the system) and agents may have the same or different goals as others.
+
+Taken together, the attributes plus properties lead to a series of actionable decision-making states.
+The variable attributes are beliefs and desires.
+The intentions may be public or private for any of these agent interactions, but it does not affect the decision making classification.
+In every case, the agent's KB is private.
+\todo{need something here to break up the flow and signal that we're starting a new section}
+
+With \emph{decision making under certainty}, between any pair of agents, both agents beliefs and desires are public and readable by the other.
+In \emph{decision making under risk}, both agents' beliefs and desires are protected, so their exact state is not known, but their probability distributions are available, which should allow the agents to make some reasonable predictions about each other's expected actions.
+Finally, with \emph{decision making under uncertainty}, neither agent knows anything about the other agent's beliefs or desires.
+Data collection is entirely speculative. See figure~\ref{fig:uncertainty-management} on page~\pageref{fig:uncertainty-management} for a summary.
+
+
 
 % future reference?
 %
