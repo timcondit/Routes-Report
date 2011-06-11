@@ -98,11 +98,11 @@ They ask and try to answer the following questions:
     Or would a cooperative model work better at the team or organization level?}
   \item{What would happen if two teams of Taxis competed with each other?
     In other words, the Taxis of two teams A and B would coordinate Fare pickup amongst themselves, but they’d be competing with the other team, and will lose some of the Fares.
-    Would the results be much different at the system level than what happens when it’s "every man for himself"?}
+    Would the results be much different at the system level than what happens when it's ``every man for himself''?}
 \end{itemize}
 
 But mostly this is a paper that explores the use of autonomous agents.
-They are characterized this way in \cite{roozemond2000act}, in a section called "What are intelligent agents?":
+They are characterized this way in \cite{roozemond2000act}, in a section called ``What are intelligent agents?'':
 
 \quote{Multi-Agent Systems can be characterised by the interaction of many agents trying to solve a variety of problems in a cooperative fashion.
 Besides AI, intelligent agents should have some additional attributes to solve problems by itself in real-time; understand information; have goals and intentions; draw distinctions between situations; generalise; synthesise new concepts and/or ideas; model the world they operate in and plan and predict consequences of actions and evaluate alternatives.
@@ -184,13 +184,13 @@ Hern\'{a}ndez et al.\cite{hernandez2001} describes a pair of closely related int
 The TRYS\footnote{The acronym is not identified in the paper.} system is implemented and in use in Barcelona, Spain.
 TRYSA$_{2}$\footnote{TRYS Autonomous Agents} is developed only to the prototype level at time of publication, but was validated with the same data as the first system.
 Both systems partition a highly congested local traffic network into a series of overlapping problem areas, which are monitored by traffic control agents.
-These agents collect data via vehicle detectors and telemetered sensors ("loop detectors").
+These agents collect data via vehicle detectors and telemetered sensors (``loop detectors'').
 The raw data is used to generate traffic control plans, but they are advisory only.
 A human operator makes the final decision on how the plans are used.
 
 These systems are fundamentally different from the approach I have taken for several reasons.
 The first, and most important difference is that these are not simulations.
-Second, they are open systems in the sense that the outputs are "processed" by a traffic engineer, as opposed to a closed and terminal system, where the final result is the end of the simulation, rather than inputs to an "offline" system.
+Second, they are open systems in the sense that the outputs are ``processed'' by a traffic engineer, as opposed to a closed and terminal system, where the final result is the end of the simulation, rather than inputs to an ``offline'' system.
 Finally, the focus here is on the traffic network exclusively, with zero representation of the users of the network, i.e. drivers and passengers.
 Regardless, there are some interesting contrasts.
 
@@ -206,8 +206,7 @@ The coordinator resolves any conflicts between the local control proposals then 
 % and also to the traffic engineer?
 
 An interesting feature of this system is the way in which the agents decide on which traffic control plans to forward to the coordinator.
-The agents are provided with data about the traffic congestion ("demand knowledge") and some expectation of how different actions will affect the flow
-of traffic ("expected redistribution").
+The agents are provided with data about the traffic congestion (``demand knowledge'') and some expectation of how different actions will affect the flow of traffic (``expected redistribution'').
 Given these pieces of information, they run a macrosimulation to decide if there will be an adequate decrease in the excess flow.
 They forward the plan to the coordinator if appropriate, and reject it otherwise.
 
@@ -258,7 +257,7 @@ On the other hand, this paper provides something that was hard to come by: a loo
 That and the fact that it was a multiagent traffic management study, made it a useful choice.
 
 One superficial similarity of TRYS and TRYSA$_{2}$ with my system is in the representation of the physical structure of the traffic network.
-It uses a declarative description of the network as a graph with nodes and links together with abstraction functions associated to components, described here as "static information about the topological structure of the problem area".
+It uses a declarative description of the network as a graph with nodes and links together with abstraction functions associated to components, described here as ``static information about the topological structure of the problem area''.
 \todo{need something here to break up the flow and signal that we're starting a new section}
 Next we look at another multiagent system for optimizing an urban traffic network.
 
@@ -271,7 +270,7 @@ The first goal of this system is to design a traffic network that operates in re
 The second goal is to handle dynamically occuring events such as traffic accidents or roadway congestion in a coordinated fashion.
 With autonomous agents at each intersection, agents at neighboring intersections are unaware of traffic events occuring elsewhere, leading to detrimental traffic flow.
 For instance, this system would allow traffic to continue toward a blocked intersection in the case of an accident.
-\todo{Does this sentence "With agents at each intersection\ldots" break the flow?}
+\todo{Does this sentence ``With agents at each intersection\ldots'' break the flow?}
 The final goal is to balance local and global concerns with respect to traffic movement.
 Local traffic agents (LTA) will typically have many alternative plans available, but several of them are incompatible with the global goals of traffic management.
 A major task is for the coordinator traffic agents (CTA) to quickly figure out which ones to drop from consideration.
@@ -338,7 +337,7 @@ Here we investigate coordination, cooperation and competition among software age
 \subsection{Extending the Belief-Desire-Intention Model}
 The Wu paper\cite{wu2003umf} develops a system for identifying agent uncertainty in relation to other agents in a MAS.
 They build upon the existing BDI (belief-desire-intention) agent model, adding
-a new attribute, KB (knowledge base), and attribute properties\todo{should I mention in a footnote that I use the terms properties and "state modifiers" interchangably?} public, private and protected.
+a new attribute, KB (knowledge base), and attribute properties\todo{should I mention in a footnote that I use the terms properties and ``state modifiers'' interchangably?} public, private and protected.
 This enhanced model is intended for use within a decision support system.
 It gives individual agents a better understanding of their position relative to other agents.
 This should allow the agents to make better informed decisions.
@@ -393,9 +392,9 @@ But until a Taxi announces publicly that he has reached the Fare first, all move
 Note also that the Fares do not communicate with one another, but only because it adds nothing to the simulation as designed.
 There are certainly enhancements where communication between potential Fares would raise their attractiveness to Taxis, thereby increasing their fitness for pickup, resulting in better (faster) responses from the Taxis.
 
-One additional note: although I have no plans currently to include it in this paper, I have run some Taxi "team" simulations with the current system.
+One additional note: although I have no plans currently to include it in this paper, I have run some Taxi ``team'' simulations with the current system.
 The Taxis in these simulations behave similarly to agents making decisions under risk.
-For any two agents, there are two possible scenarios: they are cooperating, meaning they are on the same "team", or they are coordinating, meaning they are on different teams.
+For any two agents, there are two possible scenarios: they are cooperating, meaning they are on the same ``team'', or they are coordinating, meaning they are on different teams.
 Both scenarios assume a SimType of cooperative.
 A SimType of competitive does not make much sense here, since the Taxis would be competing with their teammates and with the Taxis on the other team or teams.
 The whole program would have to be modified to make a useful team competition.
@@ -407,7 +406,7 @@ While the focus is primarily on logistics, I classify my work as it fits into th
 
 The article defines the concepts of logistics in some depth.
 Here they are talking about transport logistics, or the movement of goods from one place to another, often through multiple means, for example rail to ship to rail.
-The most succint definition of logistics that I found is "Logistics means having the right thing, at the right place, at the right time."\footnote{http://www.logisticsworld.com/logistics.htm}
+The most succint definition of logistics that I found is ``Logistics means having the right thing, at the right place, at the right time.''\footnote{http://www.logisticsworld.com/logistics.htm}
 My system is neither a traffic management nor a logistics flow model, unless you consider the Fares as product to be moved from place to place.
 Nevertheless, there are parallels and the classification is enlightening.
 
@@ -417,7 +416,7 @@ Most of them will be clear from the context, but I will expand on some of them.
 Under \emph{Approach}$\to$\emph{Usage} are the categories Automation System and Decision support system (DSS).
 This is a recurring theme in multiagent logistics and traffic management systems.
 This is the first time I've seen the term automation system used to describe the alternative to DSS.
-It is defined as "having a self-acting mechanism that performs a required act at a predetermined time or in response to certain conditions."
+It is defined as ``having a self-acting mechanism that performs a required act at a predetermined time or in response to certain conditions.''
 That's a reasonable, if general, description of my system.
 \emph{Approach}$\to$\emph{MAS structure} corresponds to the interactions of the agents, whether it is static, meaning the agents have the same roles throughout the simulation, or dynamic, where roles may change over time.
 \emph{Approach}$\to$\emph{Agent attitude} splits the agent interactions into two categories.
@@ -683,13 +682,13 @@ They do the kind of things you'd expect: wait for a request for pickup; either n
 The details of the cooperating Taxis is mostly independent of which negotiation protocol is used.
 What matters is that at some point the Taxi identifies a Fare for pickup.
 The Taxi takes a reference to the Fare, and removes it from the waitingFares queue.
-Note, this is before the Taxi has "driven" to the Fare.
+Note, this is before the Taxi has ``driven'' to the Fare.
 This scheme does not work with the competing Taxis, which handle Fare pickups differently.
 
 Competing Taxis have a different set of issues.
 Again leaving aside details about the NPs, eventually a Taxi will identify a Fare for which he would like to compete.
 Taxis identify themselves as competing for a specific target Fare by entering a compete queue that is maintained by the system on behalf of a Fare.
-Taxis are eligible to enter one compete queue at a time,\footnote{In other words, a Taxi may not compete for more than one Fare at a time.}\todo{Add something to future work about competing for multiple Fares?  Maybe while a Taxi already has a Fare, he might try and get another one on the way.} and may enter a compete queue at any time after the Fare's initial request for pickup, until the Fare is "won" or claimed by a Taxi.
+Taxis are eligible to enter one compete queue at a time,\footnote{In other words, a Taxi may not compete for more than one Fare at a time.}\todo{Add something to future work about competing for multiple Fares?  Maybe while a Taxi already has a Fare, he might try and get another one on the way.} and may enter a compete queue at any time after the Fare's initial request for pickup, until the Fare is ``won'' or claimed by a Taxi.
 A Taxi wins a Fare by being the first one to the Fare's current location, that is, the location from which the request for pickup was made.
 The winning Taxi announces his arrival to the other competitors, who then renege (exit) from the compete queue and look for another Fare for which to compete.
 Meanwhile, the winning Taxi drives to the Fare's destination.
@@ -748,7 +747,7 @@ The name pretty much sums it up for the cooperative simulations.
 Each Taxi queries the list of waiting Fares, and finds the geographically closest available Fare that has not already been acknowledged by another Taxi.
 Unless the waiting Fares queue is empty, the Taxi should always get a Fare in the cooperative simulation.
 Distance is a configurable setting.
-It is measured either "as the crow flies", or by surface street distance.
+It is measured either ``as the crow flies'', or by surface street distance.
 %See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage ...}
 
 The competitive closestFare simulation is similar, except for once again the Taxis have no knowledge of one another, and only one of them will pick up any given Fare.
@@ -1013,7 +1012,7 @@ We will look at them next.
 It refers to an old shell script and a bunch of utilities that were developed separately, before everything was unified into the tigerutils module.
 TODO: figure out where to write the documentation for this section such that it can be reused in multiple places.
 
-(2) This whole section ("Munging the raw data") should be written from a tutorial point of view.
+(2) This whole section (``Munging the raw data'') should be written from a tutorial point of view.
 In other words, describe how to use the tools, and let the API speak for itself.}
 
 A number of tools were written to extract the data, and transform it into usable latitude and longitude coordinates, along with a large number of other descriptive pieces.
