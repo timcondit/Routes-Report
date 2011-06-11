@@ -3,8 +3,10 @@
 
 \usepackage{booktabs}
 \usepackage{graphicx}
-\usepackage[bookmarks,pdfpagemode=FullScreen,colorlinks=true,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
 \usepackage{todonotes}
+% hyperref must be the last package
+%\usepackage[backref,bookmarks,pdfpagemode=FullScreen,colorlinks=true]{hyperref}
+\usepackage[bookmarks,pdfpagemode=FullScreen,colorlinks=true,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
 
 % front matter %
 \begin{document}
@@ -14,7 +16,7 @@
 \maketitle
 \thispagestyle{empty}
 
-\hyphenation{a-gents au-ton-o-mous great-er mul-ti-a-gent pa-ra-digms slight-ly}
+\hyphenation{a-gents au-ton-o-mous com-pet-i-tive great-er Mul-ti-a-gent pa-ra-digms pick-up Py-thon slight-ly}
 
 % use roman numerals for the front matter %
 \pagestyle{headings}
@@ -173,10 +175,10 @@ This paper uses the Belief-Desire-Intention (BDI) agent model to formulate a res
 The last paper is a review of multi-agent systems (MAS) used for transport logistics\cite{davidsson2005aab}.
 My software is classified according to this scheme.
 
-\section{Centralized and distributed multiagent traffic systems}
+\section{Centralized and Distributed Multiagent Traffic Systems}
 Reviewing decision support systems (DSS) for use in traffic management.
 
-\subsection{Regional agent coordination with TRYS and TRYSA$_{2}$}
+\subsection{Regional Agent Coordination with TRYS and TRYSA$_{2}$}
 Hern\'{a}ndez et al.\cite{hernandez2001} describes a pair of closely related intelligent traffic management systems (ITMS).
 The TRYS\footnote{The acronym is not identified in the paper.} system is implemented and in use in Barcelona, Spain.
 TRYSA$_{2}$\footnote{TRYS Autonomous Agents} is developed only to the prototype level at time of publication, but was validated with the same data as the first system.
@@ -286,7 +288,7 @@ Each LTA and CTA communicate directly with the ITA, but it does not process any 
 Its only purpose it to store traffic data and provide immediate feedback to the other agents.
 
 \begin{figure}[h]
-  \includegraphics{figures/LTAs-and-CTA}
+  \includegraphics{figures/LTAs-and-CTA.PNG}
   \caption{Layout of Local and Coordinator Traffic Agents.}
   \label{fig:LTAs-and-CTA}
 \end{figure}
@@ -392,7 +394,7 @@ There are certainly enhancements where communication between potential Fares wou
 
 One additional note: although I have no plans currently to include it in this paper, I have run some Taxi "team" simulations with the current system.
 The Taxis in these simulations behave similarly to agents making decisions under risk.
-For any two agents, there are two possible scenarios: they are cooperating, meaning they are on the same “team”, or they are coordinating, meaning they are on different teams.
+For any two agents, there are two possible scenarios: they are cooperating, meaning they are on the same "team", or they are coordinating, meaning they are on different teams.
 Both scenarios assume a SimType of cooperative.
 A SimType of competitive does not make much sense here, since the Taxis would be competing with their teammates and with the Taxis on the other team or teams.
 The whole program would have to be modified to make a useful team competition.
@@ -591,45 +593,199 @@ The only difference is between the cooperative and competitive NPs: the cooperat
 
 % implementation %
 \chapter{Implementation}
+\todo{Add something in here about Python duck-typing in the grid and graph classes.
+They are considered something like equivalent because they have the same set of methods.
+There's no need to mess around with interfaces or extending the same base class.
+(Use that too. That's good.)}
+\section{Grids and Graphs}
+\todo{Nothing here yet.}
 
-\todo{PICK UP HERE}
+\todo{Among other things, this is where the side-by-side map images will go.}
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
-Praesent tortor.
-In fringilla feugiat nisi.
-Fusce a elit.
-Maecenas placerat facilisis magna.
-Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
-In eget lacus.
-Pellentesque mauris.
-Sed vestibulum quam ac mauris.
-Donec vehicula risus.
-Maecenas vitae arcu quis tellus fringilla porttitor.
-Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+\section{SimPy Resource Types: Resources, Levels and Stores}
+The three types of SimPy resources available for working with the actors in a simulation are Resources, Levels and Stores.
+Depending on the complexity of the simulation, you may use one or more of them, but any individual piece is modeled using only one.
+I describe them here, and then explain how they are used in Routes.
 
-Duis ut sapien.
-Proin sit amet magna et est pharetra vestibulum.
-Pellentesque sed diam et erat sollicitudin pharetra.
-Suspendisse potenti.
-Sed fringilla sagittis urna.
-Morbi ullamcorper aliquet leo.
-Donec elit nunc, rutrum at, ultrices at, pretium a, est.
-Etiam non dolor non enim malesuada condimentum.
-Curabitur vitae sapien.
-Nulla neque.
+The first type, a Resource, is useful if you have multiple identical tasks that are modeled as SimPy objects, and require one or more discrete elements.
+The example most often given here is waiting in line at a bank.
+The tellers are the required elements (a SimPy Resource), and the customers waiting to perform some task (also a Resource) wait in a shared line for a teller to become available.
+The waiting customers are stored in a wait queue, while the customers who are at the teller stations are stored in an active queue.
 
-Donec odio nibh, varius in, dictum nec, egestas in, nisl.
-Mauris varius mi non nunc.
-Praesent porta enim in nibh.
-Donec ac mi varius ante malesuada dignissim.
-Nunc aliquet tortor ac lectus.
-Sed pede.
-Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
-Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
-Duis ullamcorper molestie mauris.
-Sed eu ipsum nec eros luctus elementum.
-Suspendisse ultrices sollicitudin nunc.
+The second resource type is the Level.
+It is used when you want to model something of a more continuous nature.
+This type is useful for simulations where you're concerned with the supply of something, e.g., fuel in an airplane.
+The available quantity of the resource is described using a scalar value.
+However, Levels do not maintain object state.
+If you need to model the resource as an object with behavior and state, then a Level may not be the right choice.
 
+The last resource type is the Store.
+Stores model the production and consumption of individual items, but a key difference is that Stores do maintain object state.
+This makes it a good choice for modeling Agents.
+Stores insert or remove any Python type, but most simulations will probably store SimPy Process objects.
+These are the main active elements in SimPy simulations.
+Stores also provide put and get queues, and are well suited to modeling Master/Slave relationships, like my Taxi/Fare simulation.
+(I originally wrote my program using Resources, but later rewrote it to use Stores instead.)
+
+The waitingFares queue of the Agents class is a SimPy Store.
+As the name suggests, it holds references to Fare objects.
+The usage is different here though, as Agents is a Process, and it contains a Store attribute.
+To ensure that there is only one waitingFares queue, it is a static (class) attribute that is shared by all Agent types.
+So the Fares share a Store object that is maintained by the group for the use of all Agents, including the Taxis.
+
+% NB: The todo below was nested inside following footnote and it breaks things pretty badly.  Don't do that.
+\footnote{To keep things manageable, the waitingFares queue is centralized store.
+I did a lot of work with ADOPT, a novel approach to distributed constraint optimization (DCOP), but eventually dropped it as too complex to implement in a reasonable amount of time.
+Regardless, this is not a fully decentralized system.}
+\todo{Link to Modi ADOPT article. (Include in bibliography? I didn't use it in the paper, so maybe not, but it's convenient to store it there.)}
+
+Fares add themselves to the queue, and Taxis remove the Fares from it.
+When a Fare is created, it's \texttt{run()} method is a \texttt{yield} call, which pushes the Fare onto the waitingFares queue:
+
+\texttt{yield put, self, Agent.waitingFares, [self]}
+
+This is the first example of Python's \texttt{yield} statement, which all Process objects use to turn PEMs into Python generators.
+This allows the method to be paused and later resumed without losing its current state.
+Here it is putting itself onto the waitingFares queue by first putting itself into a one-element list ([self]), and then putting the contents of that list onto the waitingFares queue.
+All Process objects must have a PEM with at least one yield statement.
+
+\section{The Agents}
+Taxis and Fares are subclasses of a common Agent class.
+The Agent class sets a mapping type to either grid or graph and randomly generates the Agent's initial location on the grid or graph, respectively.
+As mentioned previously, the Agent also maintains a queue that holds waiting Fares.
+It is a class attribute that holds only Fares, but it is used by both Agent types.
+The Taxi queries this list when deciding what to do next.
+Exactly what the Taxi is looking for is dependent on which simulation type (competitive or cooperative) and which negotiation protocol (FIFO, closestFare or mixedMode) are being used.
+
+The Agent also subclasses SimPy's Process class, which provides a means for SimPy to manipulate the Agents during discrete-event simulation.
+Process objects must provide a method called the Process Execution Method (PEM) that is invoked by the simulation toolkit to activate the object.
+When the PEM exits, the Process object is destroyed.
+The PEM is where the simulated object's behaviors are defined.
+
+\section{Fares}
+The lifecycle of a Fare is relatively simple.
+It begins when the Fare is created, and ends when it is dropped off at its destination by a Taxi, or the simulation ends, whichever comes first.
+Fares are created throughout the simulation.
+%Their generation rate is configurable; it is currently configured as the inverse of an exponential distribution (see meanFareGenerationRate \todo{[sec:The-agents-default.ini]}).\todo{What's a TextPage?}
+The Fare uses the same PEM for all simulations.
+It collects timestamped event data starting with the initial request for pickup; then again when it is picked up; and finally when it is dropped off.
+Depending on the NP, other events may be logged as well.
+
+\section{Taxis}
+The Taxi class is more complex than the Fares, as it defines multiple SimPy PEMs corresponding to the different negotiation protocols and simulation types.
+Superficially, that is leaving the NPs and simtypes aside for now, the lifecycle of the Taxis is complementary to that of the Fares.
+Taxis are created at the beginning of the simulation, and persist until the simulation ends.
+They normally pick up several Fares over the course of a simulation, but only one at a time.
+They do the kind of things you'd expect: wait for a request for pickup; either negotiate or compete to pick up the Fare; pick up the Fare; drive to the requested destination; update the location of both Agents; notify the Fare when the destination is reached; and then start the whole cycle over again.
+\todo{Add something about possible enhancements (maybe in the results section?) about picking up multiple Fares at more than one stop during a Taxi run.}
+
+The details of the cooperating Taxis is mostly independent of which negotiation protocol is used.
+What matters is that at some point the Taxi identifies a Fare for pickup.
+The Taxi takes a reference to the Fare, and removes it from the waitingFares queue.
+Note, this is before the Taxi has "driven" to the Fare.
+This scheme does not work with the competing Taxis, which handle Fare pickups differently.
+
+Competing Taxis have a different set of issues.
+Again leaving aside details about the NPs, eventually a Taxi will identify a Fare for which he would like to compete.
+Taxis identify themselves as competing for a specific target Fare by entering a compete queue that is maintained by the system on behalf of a Fare.
+Taxis are eligible to enter one compete queue at a time,\footnote{In other words, a Taxi may not compete for more than one Fare at a time.}\todo{Add something to future work about competing for multiple Fares?  Maybe while a Taxi already has a Fare, he might try and get another one on the way.} and may enter a compete queue at any time after the Fare's initial request for pickup, until the Fare is "won" or claimed by a Taxi.
+A Taxi wins a Fare by being the first one to the Fare's current location, that is, the location from which the request for pickup was made.
+The winning Taxi announces his arrival to the other competitors, who then renege (exit) from the compete queue and look for another Fare for which to compete.
+Meanwhile, the winning Taxi drives to the Fare's destination.
+
+Taxis have only partial knowledge of their world.
+This is most noticeable during competition.
+The negotiation protocols largely dictate which Taxis receive pickup requests from the Fares.
+In addition, Taxis are essentially blind to the number and location of their competitors, and stay that way the whole time.
+A winning Taxi sends a broadcast to announce he's won, but he does not know who receives it.
+Likewise, the receiving Taxis don't know who else has received it, or even who sent it.
+All they know is that they did or did not win the Fare.
+
+Other interesting things occur as a result of the autonomous agent's incomplete system knowledge.
+An earlier version of the program had an additional signal event when the Fare received an acknowledgment of pending pickup from the Taxi.
+This only makes sense with cooperative simulations due to the way the Taxis process pickup requests.
+While a Taxi is en-route with a Fare, it may receive requests for pickup, but may not act on them.
+So while a Taxi may be the first one available for hire, he may not necessarily be the first one to reach the Fare, since another Taxi may be closer to the Fare, but currently ineligible to respond.
+If the second Taxi drops off his Fare and reaches the Fare first, the first Taxi's acknowledgment would be considered an error, based on his limited knowledge of the other Agents.
+Therefore, I decided to leave it out.
+
+\todo{Add something about the NPs being SimPy filter functions, and how they behave.}
+There are three negotiation protocols or NPs (my phrase).
+They are similar in concept, but with different implementations, for the cooperative and competitive simulations.
+The combination of negotiation protocol and simType identifies the major characteristics of a simulation.
+The combinations are
+
+\todo{add some vertical space here}
+\begin{itemize}
+  \item{FIFO/comperative \& FIFO/competitive}
+  \item{closestFare/comperative \& closestFare/competitive}
+  \item{mixedMode/comperative \& mixedMode/competitive}
+\end{itemize}
+\todo{add some vertical space here}
+
+Any simulation uses exactly one of them.
+%It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
+The NPs control how the Fares broadcast their pickup requests, and how the Taxis decide who will make the pickup.
+\todo{This sounds like intro material.  (And comments should go in the side bars.)}
+
+\subsection{FIFO}
+The simplest NP is FIFO, or first-in, first-out, for cooperative simulations.
+As Fares enter the simulation and broadcast pickup requests, they are pushed onto the waitingFares queue.
+Taxis pop Fares off the queue in the order in which they become available to accept requests, typically after dropping off their current Fare.\footnote{At the start of the simulation there are generally more Taxis than Fares, so some Taxis wind up waiting around for something to do while the system generates work for all.}
+
+Because it is so simple, FIFO turns out to be a good baseline for comparison with other simulations.
+On the other hand, it is inefficient.
+The distances that the Taxis drive to make pickups is not taken into consideration at all.\todo{And this sounds like conclusion material.}
+
+FIFO for competitions is similar, but here the Taxis queue up (in a separate competeQ) to try and pick up the Fare.
+This simulation may behave inefficiently in another way, since most of the Taxis will be going after the same Fares.\todo{COME BACK TO THIS. During data collection and analysis, find out if my assertion is true and update this section based on reality.}
+When one gets there, the losing Taxis start over and go after the next Fare in the waitingFares queue.\footnote{I talk about a possible future enhancement using Gato, the graph animation toolbox in the conclusion. This is one of the simulations I'd most like to see animated in real time.}
+
+\subsection{closestFare}
+Next up is closestFare.
+The name pretty much sums it up for the cooperative simulations.
+Each Taxi queries the list of waiting Fares, and finds the geographically closest available Fare that has not already been acknowledged by another Taxi.
+Unless the waiting Fares queue is empty, the Taxi should always get a Fare in the cooperative simulation.
+Distance is a configurable setting.
+It is measured either "as the crow flies", or by surface street distance.
+%See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage ...}
+
+The competitive closestFare simulation is similar, except for once again the Taxis have no knowledge of one another, and only one of them will pick up any given Fare.
+So the chosen Fare must be the one that is closest to them, and they must be closest to the Fare relative to the other Taxis as well.
+The first Taxi to reach the Fare makes the pickup and the rest renege out of the compete queue to try again.
+
+\subsection{mixedMode}
+mixedMode simulations are more complex.
+Fares broadcast their pickup requests to widening areas until a Taxi either acknowledges them in the cooperative simulation, or arrives to pick them up in the competitive simulations.
+There are three configurable ratios: taxiRangeLow, taxiRangeMedium, and taxiRangeHigh.
+Their starting values are 0.25, 0.5 and 1.0, representing the time the Fare has been waiting for a pickup.
+
+An eligible Taxi uses a combination of the Fare's time in the waitingFares buffer plus their distance from the Taxi to determine which Fares to inspect.
+If there are any Fares in the buffer, the one with the lowest score (cost) is returned to the caller.
+
+If the list is empty, in other words, if there are no Fares which meet the time and space (distance) requirements of this Taxi, the Taxi goes into a getQ, and stays there until at least one suitable Fare comes along.
+There don't seem to be any restrictions from SimPy on when a Taxi can get out of the queue.
+A Taxi will stay in the getQ until a Fare is close enough for him to pick up.
+
+For the cooperative simulations, the Taxi will have acknowledge the Fare and make the pickup.
+For mixedMode competitive, all Fares that receive the same Fare data attempt to make the pickup.
+Taxis will enter the queue at different times.
+It's possible, based on their relative locations, that a Taxi that entered the getQ after other Taxis are already en-route to the Fare may be the one to make the pickup.
+
+\section{Cooperative and Competitive Simulations}
+\todo{Nothing here yet.}
+
+\section{Runtime Configuration}
+To allow for maximum runtime flexibility, the program defines two sets of standard configuration options, one for the agents, and another for graphs, if they are used.
+Users of the program may override these values on a per-option basis.
+Both files are in Windows INI-file format.\todo{link to INI-file documentation?}
+They are parsed and processed by the program to control the behavior of the simulations.
+Descriptions of the configuration files are here: \todo{[sec:The-agents-default.ini] and [sec:The-graphs-default.ini]}.\todo{link these!}
+
+\section{The Interactive Environment}
+\todo{Nothing here yet}
+
+\todo{This section will describe the command-line UI. I don't know whether to demo the program here, or just focus on the mechanical parts (e.g., userInput(), the file caching, etc.), and show it in use somewhere else. It probably makes sense to demo the program in the results section.}
 
 % results %
 \chapter{Results}
@@ -750,6 +906,13 @@ Suspendisse ultrices sollicitudin nunc.
 
 
 \chapter{Annotated Config Files}
+All configuration for the simulation is done through ini-style configuration files \todo{http://en.wikipedia.org/wiki/INI\_file}.
+The agents use conf/agents/defaults.ini and conf/agents/overrides.ini.
+Similarly, the graphs use conf/graphs/defaults.ini and conf/graphs/overrides.ini.
+Both defaults.ini define default settings for the simulations.
+Nothing should be changed here.
+All changes should be made in the appropriate overrides.ini.
+
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
 Praesent tortor.
 In fringilla feugiat nisi.
