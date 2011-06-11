@@ -1,13 +1,15 @@
 % preliminaries %
-\documentclass[11pt,letterpaper,onecolumn,twoside,openright,draft]{report}
+% LaTeX examples: http://denethor.wlu.ca/latex/
 
-%\usepackage{booktabs,fullpage,graphicx,showframe,todonotes}
-\usepackage{booktabs,graphicx,setspace,showframe,todonotes}
+% change the type from draft to final to see the hyperlinks
+\documentclass[11pt,letterpaper,onecolumn,twoside,openright,final]{report}
+
+\usepackage{booktabs,graphicx,setspace,showframe,todonotes} %fullpage
 % helpful: http://magic.aladdin.cs.cmu.edu/2005/08/25/setting-margin-in-latex/
-\usepackage[dvips,letterpaper,margin=1in]{geometry}
+% TODO Consider using margin=1in for final paper, and margin=1.75in for the draft so I can see the TODO comments.
+\usepackage[dvips,letterpaper,margin=1.75in]{geometry}
 % hyperref must be the last package
-%\usepackage[backref,bookmarks,pdfpagemode=FullScreen,colorlinks=true]{hyperref}
-\usepackage[bookmarks,pdfpagemode=FullScreen,colorlinks=true,pdfkeywords={PDF, LaTeX, hyperlinks, hyperref}]{hyperref}
+\usepackage{hyperref}
 
 % front matter %
 \begin{document}
@@ -25,7 +27,6 @@
 \pagenumbering{roman}
 
 \tableofcontents
-\todo{add hyperlinks}
 \listoffigures
 \listoftables
 
@@ -44,7 +45,8 @@ Functional transit maps are generated in real-time from Census Bureau data that 
 The size of the transit map, and hence the simulation's range can be as small as a single area code, up to an entire county.
 The data that is downloaded to generate the transit map is processed locally the first time it's used, and cached to save time (and bandwidth) for subsequent runs.
 
-\todo{Add something here about the transit map being a big network graph. Can probably pull something directly out of the full text.}
+
+\marginpar{Add something here about the transit map being a big network graph. Can probably pull something directly out of the full text.}
 
 There are three different negotiation protocols - first-in, first-out, closest Fare, and mixed mode.
 There are two simulation types - cooperative and competitive.
@@ -54,6 +56,8 @@ They are combined for a total of six different simulations.
 % switch to Arabic numbers for the body - and restart the page count %
 \pagenumbering{arabic}
 \setcounter{page}{2}
+%\singlespacing,onehalfspacing,doublespacing
+\onehalfspacing
 
 % introduction %
 \chapter{Introduction}
@@ -64,13 +68,10 @@ Taxi services have operated the same way for many years.
 Wherever they operate, it is common to get a ride by flagging down a taxi from the side of the road.
 Most taxi companies also have dispatchers who will arrange pickup at a later time.\footnote{A notable exception is New York City, where a fare cannot be prearranged.
 Only for-hire vehicles such as livery cars or limousines may prearrange pickup.
+See \href{http://www.nyc.gov/html/tlc/downloads/pdf/fhv\_base\_fact\_sheet.pdf}{Understanding the For-Hire Vehicle Industry}
+and \href{http://www.nyc.gov/html/tlc/html/passenger/faq\_pass.shtml\#14}{How can I pre-arrange a trip in a Yellow Cab?}}
 
-{\hyperlink{http://www.nyc.gov/html/tlc/downloads/pdf/fhv_base_fact_sheet.pdf}{Understanding the For-Hire Vehicle Industry}}
-\hyperlink{http://www.nyc.gov/html/tlc/html/passenger/faq_pass.shtml\#14} {How can I pre-arrange a trip in a Yellow Cab?}}
-
-\todo{the hyperlinks below are broken}
-
-Taxi services are subject to extensive regulation, and are in some ways similar to a public utility.\footnote{This site documents legal actions and taxi regulations all over the world: {\hyperlink{http://www.taxi-library.org/regulation.htm}{Regulation of Taxicabs}}}
+Taxi services are subject to extensive regulation, and are in some ways similar to a public utility.\footnote{This site documents legal actions and taxi regulations all over the world: {\href{http://www.taxi-library.org/regulation.htm}{Regulation of Taxicabs}}}
 
 For example, the rates charged by municipal taxi services are often set by the city or county in which the taxis operate.
 This means that among other things, they cannot compete on price, since they are all forced to charge the same rates for the same trips.
@@ -124,7 +125,7 @@ Taxis and Fares are not the only choice of autonomous agents to study, but they 
 
 \section{Definition of Terms}
 The following terms are used throughout the paper:
-\todo{add the definitions!}
+\marginpar{add the definitions!}
 
 \section{Organization}
 The rest of the paper consists of the following sections:
@@ -135,7 +136,7 @@ The rest of the paper consists of the following sections:
     Instead of looking at a system of mobile agents, stationary agents at traffic lights provide information for improving the flow of traffic or routing around accidents and congestion.
     The Belief-Desire-Intention model of intelligent agents is reviewed, and the Routes agents are categorized within a framework for organizing classes of multi-agent systems for transport logistics.
     (This is not directly related, unless people are considered goods to transport, but it clarifies a few things about the agents nevertheless.)}
-  \item{IMPLEMENTATION describes the Taxis and Fares in \linebreak greater detail.
+  \item{IMPLEMENTATION describes the Taxis and Fares in greater detail.
     It explains the grids and graphs that make up the Agent's world, and the network traversal algorithms that calculate routes around the different regions.
     It expands on the negotiation protocols and simulation types.
     Finally it describes the simulation software that drives the whole process, the extensive run-time configuration options, and the interactive environment within which the simulations are executed.}
@@ -150,10 +151,6 @@ The rest of the paper consists of the following sections:
   \item{APPENDIX D: SOURCE CODE\ldots}
   \item{APPENDIX E: TRANSCRIPT OF INTERACTIVE SESSION\ldots}
 \end{itemize}
-
-\todo{existence proof only: get rid of them}
-\cite{davidsson2005aab}
-\cite{yokoo1999}
 
 % use this?
 % cite: http://en.wikipedia.org/wiki/Multi-agent_system, accessed 1/11/2009
@@ -238,7 +235,7 @@ By this, he modifies the degree of autonomy of some agents, biasing the outcome 
 The agents choose local signal plans, but they still need to coordinate with one another to settle on a globally consistent signal plan.
 This is similar to the task of the coordinator agent in TRYS.
 To do this the agents use a distributed constraint optimization protocol\footnote{The original basis for my work, although it did not make it into the final product.} that implements weak commitment search\cite{yokoo1999}.
-\todo{This is referenced in Hernandez, but not in this paper.
+\marginpar{This is referenced in Hernandez, but not in this paper.
 I should probably dig up the reference anyway.}
 
 This is a three-stage process.
@@ -248,7 +245,8 @@ This agent computes approximate probabilities that each of the chosen sets of lo
 In other words, lower quality plans are dropped from consideration.
 In stage 3 a set of local signal plans are selected by lottery, and the results are shared with all agents.
 This concludes the work of the autonomous agents in TRYSA$_{2}$.
-\todo{need something here to break up the flow and signal that we're starting a new section}
+
+\marginpar{need something here to break up the flow and signal that we're starting a new section}
 At this stage in both systems the selected control plans are ready for review by the traffic engineer.
 
 \subsection{Comparison with Routes}
@@ -258,7 +256,8 @@ That and the fact that it was a multiagent traffic management study, made it a u
 
 One superficial similarity of TRYS and TRYSA$_{2}$ with my system is in the representation of the physical structure of the traffic network.
 It uses a declarative description of the network as a graph with nodes and links together with abstraction functions associated to components, described here as ``static information about the topological structure of the problem area''.
-\todo{need something here to break up the flow and signal that we're starting a new section}
+
+\marginpar{need something here to break up the flow and signal that we're starting a new section}
 Next we look at another multiagent system for optimizing an urban traffic network.
 
 \subsection{Local and Global Agent Coordination}
@@ -270,7 +269,7 @@ The first goal of this system is to design a traffic network that operates in re
 The second goal is to handle dynamically occuring events such as traffic accidents or roadway congestion in a coordinated fashion.
 With autonomous agents at each intersection, agents at neighboring intersections are unaware of traffic events occuring elsewhere, leading to detrimental traffic flow.
 For instance, this system would allow traffic to continue toward a blocked intersection in the case of an accident.
-\todo{Does this sentence ``With agents at each intersection\ldots'' break the flow?}
+\marginpar{Does this sentence ``With agents at each intersection\ldots'' break the flow?}
 The final goal is to balance local and global concerns with respect to traffic movement.
 Local traffic agents (LTA) will typically have many alternative plans available, but several of them are incompatible with the global goals of traffic management.
 A major task is for the coordinator traffic agents (CTA) to quickly figure out which ones to drop from consideration.
@@ -293,13 +292,13 @@ Its only purpose it to store traffic data and provide immediate feedback to the 
   \label{fig:LTAs-and-CTA}
 \end{figure}
 
-\todo{use a subfloat for the map and graph side-by-side images (whenever I get around to doing it)}
+\marginpar{use a subfloat for the map and graph side-by-side images (whenever I get around to doing it)}
 
 When deciding on a traffic light pattern, most communication takes place between the LTAs and the CTAs, with the ITAs providing stored data as necessary.
 In order for the CTA to calculate a global optimum for a given intersection, it must collect data from all neighbors of that intersection's LTA.
 The ITA provides data about traffic levels, congestion, accidents, etc. at each of the intersections requested by the CTA.
 The CTA calculates a traffic light pattern and compares it to that proposed by the LTA.
-\todo{Do I need something here about the LTAs generating their own proposed traffic light pattern for review by the CTA?}
+\marginpar{Do I need something here about the LTAs generating their own proposed traffic light pattern for review by the CTA?}
 If there is a significant difference between them, a balance between the local and global optimums must be reached, and communicated to the LTA\footnote{The authors do not describe how they negotiate this balance.}.
 Traffic sensors provide data to the ITAs.
 Collected data includes the current state of each traffic light, the direction of traffic movement, e.g. North heading North or West, or South going East, and the time remaining for the light in its current state.
@@ -337,7 +336,7 @@ Here we investigate coordination, cooperation and competition among software age
 \subsection{Extending the Belief-Desire-Intention Model}
 The Wu paper\cite{wu2003umf} develops a system for identifying agent uncertainty in relation to other agents in a MAS.
 They build upon the existing BDI (belief-desire-intention) agent model, adding
-a new attribute, KB (knowledge base), and attribute properties\todo{should I mention in a footnote that I use the terms properties and ``state modifiers'' interchangably?} public, private and protected.
+a new attribute, KB (knowledge base), and attribute properties\marginpar{should I mention in a footnote that I use the terms properties and ``state modifiers'' interchangably?} public, private and protected.
 This enhanced model is intended for use within a decision support system.
 It gives individual agents a better understanding of their position relative to other agents.
 This should allow the agents to make better informed decisions.
@@ -367,7 +366,7 @@ Taken together, the attributes plus properties lead to a series of actionable de
 The variable attributes are beliefs and desires.
 The intentions may be public or private for any of these agent interactions, but it does not affect the decision making classification.
 In every case, the agent's KB is private.
-\todo{need something here to break up the flow and signal that we're starting a new section}
+\marginpar{need something here to break up the flow and signal that we're starting a new section}
 
 With \emph{decision making under certainty}, between any pair of agents, both agents beliefs and desires are public and readable by the other.
 In \emph{decision making under risk}, both agents' beliefs and desires are protected, so their exact state is not known, but their probability distributions are available, which should allow the agents to make some reasonable predictions about each other's expected actions.
@@ -424,7 +423,7 @@ All agents are classified as either benevolent (cooperative) or selfish (competi
 They do not make the distinction between cooperative and coordinative agents.
 In any event, my system includes both cooperative and competitive agents.
 
-\todo{Drop this paragraph?}
+\marginpar{Drop this paragraph?}
 The article mentions Multi Agent Based Simulations (MABS), a term that simply means that the agents in the simulation may have different roles, e.g. a company, a truck, a customer, etc.
 We've seen similar examples of this with the LTAs and CTAs in the France paper.
 My agents are designed similarly.
@@ -587,20 +586,20 @@ The only difference is between the cooperative and competitive NPs: the cooperat
   \label{tab:classifying-taxis-and-fares-sim}%
 \end{table}%
 
-\todo{old comment: Modi - ADOPT: Asynchronous Distributed Constraint Optimization with Quality Guarantees}
-\todo{old comment: Mailler - Solving Distributed Constraint Optimization Problems Using Cooperative Mediation}
+\marginpar{old comment: Modi - ADOPT: Asynchronous Distributed Constraint Optimization with Quality Guarantees}
+\marginpar{old comment: Mailler - Solving Distributed Constraint Optimization Problems Using Cooperative Mediation}
 
 
 % implementation %
 \chapter{Implementation}
-\todo{Add something in here about Python duck-typing in the grid and graph classes.
+\marginpar{Add something in here about Python duck-typing in the grid and graph classes.
 They are considered something like equivalent because they have the same set of methods.
 There's no need to mess around with interfaces or extending the same base class.
 (Use that too. That's good.)}
 \section{Grids and Graphs}
-\todo{Nothing here yet.}
+Nothing here yet\ldots
 
-\todo{Among other things, this is where the side-by-side map images will go.}
+\marginpar{Among other things, this is where the side-by-side map images will go.}
 
 \section{SimPy Resource Types: Resources, Levels and Stores}
 The three types of SimPy resources available for working with the actors in a simulation are Resources, Levels and Stores.
@@ -637,7 +636,7 @@ So the Fares share a Store object that is maintained by the group for the use of
 \footnote{To keep things manageable, the waitingFares queue is centralized store.
 I did a lot of work with ADOPT, a novel approach to distributed constraint optimization (DCOP), but eventually dropped it as too complex to implement in a reasonable amount of time.
 Regardless, this is not a fully decentralized system.}
-\todo{Link to Modi ADOPT article. (Include in bibliography? I didn't use it in the paper, so maybe not, but it's convenient to store it there.)}
+\marginpar{Link to Modi ADOPT article. (Include in bibliography? I didn't use it in the paper, so maybe not, but it's convenient to store it there.)}
 
 Fares add themselves to the queue, and Taxis remove the Fares from it.
 When a Fare is created, it's \texttt{run()} method is a \texttt{yield} call, which pushes the Fare onto the waitingFares queue:
@@ -666,7 +665,7 @@ The PEM is where the simulated object's behaviors are defined.
 The lifecycle of a Fare is relatively simple.
 It begins when the Fare is created, and ends when it is dropped off at its destination by a Taxi, or the simulation ends, whichever comes first.
 Fares are created throughout the simulation.
-%Their generation rate is configurable; it is currently configured as the inverse of an exponential distribution (see meanFareGenerationRate \todo{[sec:The-agents-default.ini]}).\todo{What's a TextPage?}
+Their generation rate is configurable; it is currently configured as the inverse of an exponential distribution (see meanFareGenerationRate \todo{[sec:The-agents-default.ini]}).\todo{What's a TextPage?}
 The Fare uses the same PEM for all simulations.
 It collects timestamped event data starting with the initial request for pickup; then again when it is picked up; and finally when it is dropped off.
 Depending on the NP, other events may be logged as well.
@@ -677,7 +676,7 @@ Superficially, that is leaving the NPs and simtypes aside for now, the lifecycle
 Taxis are created at the beginning of the simulation, and persist until the simulation ends.
 They normally pick up several Fares over the course of a simulation, but only one at a time.
 They do the kind of things you'd expect: wait for a request for pickup; either negotiate or compete to pick up the Fare; pick up the Fare; drive to the requested destination; update the location of both Agents; notify the Fare when the destination is reached; and then start the whole cycle over again.
-\todo{Add something about possible enhancements (maybe in the results section?) about picking up multiple Fares at more than one stop during a Taxi run.}
+\marginpar{Add something about possible enhancements (maybe in the results section?) about picking up multiple Fares at more than one stop during a Taxi run.}
 
 The details of the cooperating Taxis is mostly independent of which negotiation protocol is used.
 What matters is that at some point the Taxi identifies a Fare for pickup.
@@ -688,7 +687,7 @@ This scheme does not work with the competing Taxis, which handle Fare pickups di
 Competing Taxis have a different set of issues.
 Again leaving aside details about the NPs, eventually a Taxi will identify a Fare for which he would like to compete.
 Taxis identify themselves as competing for a specific target Fare by entering a compete queue that is maintained by the system on behalf of a Fare.
-Taxis are eligible to enter one compete queue at a time,\footnote{In other words, a Taxi may not compete for more than one Fare at a time.}\todo{Add something to future work about competing for multiple Fares?  Maybe while a Taxi already has a Fare, he might try and get another one on the way.} and may enter a compete queue at any time after the Fare's initial request for pickup, until the Fare is ``won'' or claimed by a Taxi.
+Taxis are eligible to enter one compete queue at a time,\footnote{In other words, a Taxi may not compete for more than one Fare at a time.}\marginpar{Add something to future work about competing for multiple Fares?  Maybe while a Taxi already has a Fare, he might try and get another one on the way.} and may enter a compete queue at any time after the Fare's initial request for pickup, until the Fare is ``won'' or claimed by a Taxi.
 A Taxi wins a Fare by being the first one to the Fare's current location, that is, the location from which the request for pickup was made.
 The winning Taxi announces his arrival to the other competitors, who then renege (exit) from the compete queue and look for another Fare for which to compete.
 Meanwhile, the winning Taxi drives to the Fare's destination.
@@ -709,24 +708,24 @@ So while a Taxi may be the first one available for hire, he may not necessarily 
 If the second Taxi drops off his Fare and reaches the Fare first, the first Taxi's acknowledgment would be considered an error, based on his limited knowledge of the other Agents.
 Therefore, I decided to leave it out.
 
-\todo{Add something about the NPs being SimPy filter functions, and how they behave.}
+\marginpar{Add something about the NPs being SimPy filter functions, and how they behave.}
 There are three negotiation protocols or NPs (my phrase).
 They are similar in concept, but with different implementations, for the cooperative and competitive simulations.
 The combination of negotiation protocol and simType identifies the major characteristics of a simulation.
 The combinations are
 
-\todo{add some vertical space here}
+\marginpar{add some vertical space here}
 \begin{itemize}
   \item{FIFO/comperative \& FIFO/competitive}
   \item{closestFare/comperative \& closestFare/competitive}
   \item{mixedMode/comperative \& mixedMode/competitive}
 \end{itemize}
-\todo{add some vertical space here}
+\marginpar{add some vertical space here}
 
 Any simulation uses exactly one of them.
-%It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
+It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
 The NPs control how the Fares broadcast their pickup requests, and how the Taxis decide who will make the pickup.
-\todo{This sounds like intro material.  (And comments should go in the side bars.)}
+\marginpar{This sounds like intro material.  (And comments should go in the side bars.)}
 
 \subsection{FIFO}
 The simplest NP is FIFO, or first-in, first-out, for cooperative simulations.
@@ -735,10 +734,10 @@ Taxis pop Fares off the queue in the order in which they become available to acc
 
 Because it is so simple, FIFO turns out to be a good baseline for comparison with other simulations.
 On the other hand, it is inefficient.
-The distances that the Taxis drive to make pickups is not taken into consideration at all.\todo{And this sounds like conclusion material.}
+The distances that the Taxis drive to make pickups is not taken into consideration at all.\marginpar{And this sounds like conclusion material.}
 
 FIFO for competitions is similar, but here the Taxis queue up (in a separate competeQ) to try and pick up the Fare.
-This simulation may behave inefficiently in another way, since most of the Taxis will be going after the same Fares.\todo{COME BACK TO THIS. During data collection and analysis, find out if my assertion is true and update this section based on reality.}
+This simulation may behave inefficiently in another way, since most of the Taxis will be going after the same Fares.\marginpar{COME BACK TO THIS. During data collection and analysis, find out if my assertion is true and update this section based on reality.}
 When one gets there, the losing Taxis start over and go after the next Fare in the waitingFares queue.\footnote{I talk about a possible future enhancement using Gato, the graph animation toolbox in the conclusion. This is one of the simulations I'd most like to see animated in real time.}
 
 \subsection{closestFare}
@@ -748,7 +747,7 @@ Each Taxi queries the list of waiting Fares, and finds the geographically closes
 Unless the waiting Fares queue is empty, the Taxi should always get a Fare in the cooperative simulation.
 Distance is a configurable setting.
 It is measured either ``as the crow flies'', or by surface street distance.
-%See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage ...}
+See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage ...}
 
 The competitive closestFare simulation is similar, except for once again the Taxis have no knowledge of one another, and only one of them will pick up any given Fare.
 So the chosen Fare must be the one that is closest to them, and they must be closest to the Fare relative to the other Taxis as well.
@@ -773,19 +772,19 @@ Taxis will enter the queue at different times.
 It's possible, based on their relative locations, that a Taxi that entered the getQ after other Taxis are already en-route to the Fare may be the one to make the pickup.
 
 \section{Cooperative and Competitive Simulations}
-\todo{Nothing here yet.}
+Nothing here yet\ldots
 
 \section{Runtime Configuration}
 To allow for maximum runtime flexibility, the program defines two sets of standard configuration options, one for the agents, and another for graphs, if they are used.
 Users of the program may override these values on a per-option basis.
-Both files are in Windows INI-file format.\todo{link to INI-file documentation?}
+Both files are in Windows INI-file format.\marginpar{link to INI-file documentation?}
 They are parsed and processed by the program to control the behavior of the simulations.
 Descriptions of the configuration files are here: \todo{[sec:The-agents-default.ini] and [sec:The-graphs-default.ini]}.\todo{link these!}
 
 \section{The Interactive Environment}
-\todo{Nothing here yet}
+Nothing here yet\ldots
 
-\todo{This section will describe the command-line UI. I don't know whether to demo the program here, or just focus on the mechanical parts (e.g., userInput(), the file caching, etc.), and show it in use somewhere else. It probably makes sense to demo the program in the results section.}
+\marginpar{This section will describe the command-line UI. I don't know whether to demo the program here, or just focus on the mechanical parts (e.g., userInput(), the file caching, etc.), and show it in use somewhere else. It probably makes sense to demo the program in the results section.}
 
 % results %
 \chapter{Results}
@@ -870,7 +869,7 @@ Suspendisse ultrices sollicitudin nunc.
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
 \fbox{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
 It's more work, but you get more realistic simulations.}}
-\todo{add some vertical space here}
+\marginpar{add some vertical space here}
 
 The U.S. Census Bureau provides free access to the raw geographic data that is used for the simulations.
 It is called TIGER.\footnote{This is an acronym for Topologically Integrated Geographic Encoding and Referencing.}
@@ -887,12 +886,12 @@ This is U.S. Census bureau data, so it covers the United States of America, and 
 For all practical purposes, you have two choices: county (or county equivalent) or state.
 The geographic data is grouped by state, and within each state, by county.
 The simplest way to get started is to download a single county.
-If you have a specific county in mind, you can find the name of the file by looking here: TIGER/Line Metadata (ASCII)\todo{make proper URL http://www.census.gov/geo/tigerline/app\_a03.txt}.
+If you have a specific county in mind, you can find the name of the file by looking \href{http://www.census.gov/geo/tigerline/app\_a03.txt}{here}.
 This is the 2006 Second Edition TIGER/Line Metadata in ASCII text format.
-Similar documentation can be found here: \todo{make proper URL http://www.census.gov/geo/www/tiger/tiger2006se/a6seapa.txt}.
+Similar documentation can be found \href{http://www.census.gov/geo/www/tiger/tiger2006se/a6seapa.txt}{here}.
 
 If you want to download all the files for a state, or even all the states, you will need to automate the download step.
-My recommendation is that you download wget for Windows \todo{make proper URL http://users.ugent.be/~bpuype/wget/}, and use that.
+My recommendation is that you download and use \href{http://users.ugent.be/~bpuype/wget/}{wget for Windows}.
 That's what is used for the examples.
 
 Here is the most direct and efficient way of downloading the TIGER files that I have found.
@@ -930,14 +929,14 @@ TGR26153.ZIP TGR26155.ZIP TGR26157.ZIP TGR26159.ZIP
 TGR26161.ZIP TGR26163.ZIP TGR26165.ZIP
 \end{verbatim}
 
-\todo{newer TIGER/Line files:
+\marginpar{newer TIGER/Line files:
 ftp://ftp2.census.gov/geo/pvs/tiger2010st/
 ftp://ftp2.census.gov/geo/tiger/TIGER2009/
 ftp://ftp2.census.gov/geo/tiger/TIGER2008/
 ftp://ftp2.census.gov/geo/tiger/TIGER2007FE/
 }
 
-The numbered ZIP files starting with 'TGR26" contain county data.
+The numbered ZIP files starting with 'TGR26' contain county data.
 It turns out that Michigan has more counties than many other states.
 So it may not be a completely representative sample.
 Regardless, you will definitely want to use a download tool if you are planning on using multiple counties or states.
@@ -954,9 +953,9 @@ The county codes are not contiguous for some reason.
 They tend to be mostly odd numbers.
 
 Working inward, here are the contents of a typical uncompressed county file called TGR26001.
-According to\todo{make ref: [TIGER/Line Metadata (ASCII)]}, this represents Alcona County, MI:
+According to\marginpar{make ref: [TIGER/Line Metadata (ASCII)]}, this represents Alcona County, MI:
 
-\todo{add cxref to the TIGER txt doc above}
+\marginpar{add cxref to the TIGER txt doc above}
 
 \begin{verbatim}
 >ls TGR26001
@@ -970,13 +969,13 @@ TGR26001.RT8 TGR26001.RTH TGR26001.RTR
 
 Each county zip file contains a number of RT\footnote{record type - probably belongs in definition of terms instead of here} files.
 These files contain a variety of different landmarks, roads, bodies of water, etc.
-There is documentation at the TIGER site that describes them all TIGER/Line Data Dictionary\todo{make proper URL http://www.census.gov/geo/www/tiger/tiger2006se/a6sech6.txt}.
+The \href{http://www.census.gov/geo/www/tiger/tiger2006se/a6sech6.txt}{TIGER/Line Data Dictionary} describes them all .
 However, the agents simulation only use data from the RT1 and RT2 files.
-\todo{The RT1 and RT2 records would be nice to have in a figure, but I can't fscking figure it out yet.}
+\marginpar{The RT1 and RT2 records would be nice to have in a figure, but I can't fscking figure it out yet.}
 
 Here are sample records from RT1 and RT2.
 
-\emph{RT1}
+\textbf{RT1}
 \begin{verbatim}
 >head -1 TGR26001\TGR26001.RT1
 10906 135884517 K Wissmiller Rd A41 3169 3499 3168
@@ -984,7 +983,7 @@ Here are sample records from RT1 and RT2.
 -83395134+44569328 -83381740+44569307
 \end{verbatim}
 
-\emph{RT2}
+\textbf{RT2}
 \begin{verbatim}
 >head -1 TGR26001\TGR26001.RT2
 20906 135884517 1 -83391780+44569334 +000000000
@@ -999,14 +998,14 @@ The basic unit in the RT1 and RT2 records are these line segments.
 The endpoints of the road and the section of road itself, translate naturally into the nodes and edge of a simple graph.
 It may not be readily apparent, but the latitude and longitude for both ends of the road segment are in there.
 Those are two\cite{colu92} of the crucial pieces of the geograph puzzle.
-\todo{WTF is colu92?}
+\marginpar{WTF is colu92?}
 
 The next step is to prepare the data for importing into an SQL database.
 Several tools were written specifically for this purpose.
 We will look at them next.
 
 \section{Munging the Raw Data}
-\todo{Notes
+\marginpar{Notes
 
 (1) The relevant rtf documentation (hg/tags/graphs\_0.6/etc/ documentation/ tools-for-working-with-TIGER-data.rtf) is out of date.
 It refers to an old shell script and a bunch of utilities that were developed separately, before everything was unified into the tigerutils module.
@@ -1018,8 +1017,6 @@ In other words, describe how to use the tools, and let the API speak for itself.
 A number of tools were written to extract the data, and transform it into usable latitude and longitude coordinates, along with a large number of other descriptive pieces.
 Other tools were written to create the databases and import the data into a database.
 Here's a quick summary of the tools:
-
-\todo{PICKUP HERE}
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 Pellentesque dignissim.
@@ -1035,15 +1032,52 @@ Donec vehicula risus.
 Maecenas vitae arcu quis tellus fringilla porttitor.
 Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
 
+\section{Populating the Database}
+\marginpar{This section ``Populating the Database'' depends on the previous section ``Munging the raw data''.
+TODO: start there.
+Figure it out, then repeat the same steps with this content.}
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Pellentesque dignissim.
+Praesent tortor.
+In fringilla feugiat nisi.
+Fusce a elit.
+Maecenas placerat facilisis magna.
+Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
+In eget lacus.
+Pellentesque mauris.
+Sed vestibulum quam ac mauris.
+Donec vehicula risus.
+Maecenas vitae arcu quis tellus fringilla porttitor.
+Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+
+
 \chapter{Annotated Config Files}
-All configuration for the simulation is done through ini-style configuration files \todo{http://en.wikipedia.org/wiki/INI\_file}.
+All configuration for the simulation is done through \href{http://en.wikipedia.org/wiki/INI\_file}{ini-style configuration files}.
 The agents use conf/agents/defaults.ini and conf/agents/overrides.ini.
 Similarly, the graphs use conf/graphs/defaults.ini and conf/graphs/overrides.ini.
 Both defaults.ini define default settings for the simulations.
 Nothing should be changed here.
 All changes should be made in the appropriate overrides.ini.
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+\section{The Agents default.ini}
+\todo{add link to sec:The-agents-default.ini}
+The agents configuration includes the sections \emph{runtime} and \emph{dev}.
+\marginpar{Is runtime and dev still accurate?}
+
+\textbf{[runtime]}
+\marginpar{add some vertical space here}
+\textbf{useGUI}\todo{how to offset some constant width?}\emph{Type: Boolean.} Specifies whether or not to produce graphical results.
+This is a top-level option.
+If it is False,\ldots is ignored.
+\emph{Default: False.}
+\todo{What is ignored?
+Leave that comment out?}
+
+
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Pellentesque dignissim.
 Praesent tortor.
 In fringilla feugiat nisi.
 Fusce a elit.
