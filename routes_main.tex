@@ -868,7 +868,161 @@ Suspendisse ultrices sollicitudin nunc.
 % appendices %
 \appendix
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
+\fbox{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
+It's more work, but you get more realistic simulations.}}
+\todo{add some vertical space here}
+
+The U.S. Census Bureau provides free access to the raw geographic data that is used for the simulations.
+It is called TIGER.\footnote{This is an acronym for Topologically Integrated Geographic Encoding and Referencing.}
+
+The Census Bureau provides data only -- there are no GIS or mapping tools available with TIGER.
+On the other hand, the data they provide is exhaustive.
+There is much more detail here than is needed to generate geographical graphs.
+Several tools were developed as part of this project to extract the necessary pieces and transform the data into a form suitable for importing into an SQL database.
+
+\section{Getting the Datasets}
+The first thing to decide is how much data you want, and from what region.
+This is U.S. Census bureau data, so it covers the United States of America, and four U.S. Island Areas: American Samoa, Guam, Northern Mariana Islands, and U.S. Virgin Islands.
+
+For all practical purposes, you have two choices: county (or county equivalent) or state.
+The geographic data is grouped by state, and within each state, by county.
+The simplest way to get started is to download a single county.
+If you have a specific county in mind, you can find the name of the file by looking here: TIGER/Line Metadata (ASCII)\todo{make proper URL http://www.census.gov/geo/tigerline/app\_a03.txt}.
+This is the 2006 Second Edition TIGER/Line Metadata in ASCII text format.
+Similar documentation can be found here: \todo{make proper URL http://www.census.gov/geo/www/tiger/tiger2006se/a6seapa.txt}.
+
+If you want to download all the files for a state, or even all the states, you will need to automate the download step.
+My recommendation is that you download wget for Windows \todo{make proper URL http://users.ugent.be/~bpuype/wget/}, and use that.
+That's what is used for the examples.
+
+Here is the most direct and efficient way of downloading the TIGER files that I have found.
+This command says to fetch the files recursively for the state of Michigan\footnote{Michigan's FIPS http://www.itl.nist.gov/fipspubs/fip5-2.htm (federal information processing standard) state code is 26.}, but only to a depth of level 1.
+If you do not use these options, all you get is a deeply nested index.html.
+
+\begin{verbatim}
+C:\Source\TIGER>wget --recursive --level=1 \
+  http://www2.census.gov/geo/tiger/tiger2006se/MI
+
+C:\Source\TIGER>ls www2.census.gov\geo\tiger\tiger2006se\MI
+COUNTS26.TXT index.html
+index.html@C=D;O=Aindex.html@C=M;O=A
+index.html@C=N;O=D index.html@C=S;O=A
+TGR26001.ZIP TGR26003.ZIP TGR26005.ZIP TGR26007.ZIP
+TGR26009.ZIP TGR26011.ZIP TGR26013.ZIP TGR26015.ZIP
+TGR26017.ZIP TGR26019.ZIP TGR26021.ZIP TGR26023.ZIP
+TGR26025.ZIP TGR26027.ZIP TGR26029.ZIP TGR26031.ZIP
+TGR26033.ZIP TGR26035.ZIP TGR26037.ZIP TGR26039.ZIP
+TGR26041.ZIP TGR26043.ZIP TGR26045.ZIP TGR26047.ZIP
+TGR26049.ZIP TGR26051.ZIP TGR26053.ZIP TGR26055.ZIP
+TGR26057.ZIP TGR26059.ZIP TGR26061.ZIP TGR26063.ZIP
+TGR26065.ZIP TGR26067.ZIP TGR26069.ZIP TGR26071.ZIP
+TGR26073.ZIP TGR26075.ZIP TGR26077.ZIP TGR26079.ZIP
+TGR26081.ZIP TGR26083.ZIP TGR26085.ZIP TGR26087.ZIP
+TGR26089.ZIP TGR26091.ZIP TGR26093.ZIP TGR26095.ZIP
+TGR26097.ZIP TGR26099.ZIP TGR26101.ZIP TGR26103.ZIP
+TGR26105.ZIP TGR26107.ZIP TGR26109.ZIP TGR26111.ZIP
+TGR26113.ZIP TGR26115.ZIP TGR26117.ZIP TGR26119.ZIP
+TGR26121.ZIP TGR26123.ZIP TGR26125.ZIP TGR26127.ZIP
+TGR26129.ZIP TGR26131.ZIP TGR26133.ZIP TGR26135.ZIP
+TGR26137.ZIP TGR26139.ZIP TGR26141.ZIP TGR26143.ZIP
+TGR26145.ZIP TGR26147.ZIP TGR26149.ZIP TGR26151.ZIP
+TGR26153.ZIP TGR26155.ZIP TGR26157.ZIP TGR26159.ZIP
+TGR26161.ZIP TGR26163.ZIP TGR26165.ZIP
+\end{verbatim}
+
+\todo{newer TIGER/Line files:
+ftp://ftp2.census.gov/geo/pvs/tiger2010st/
+ftp://ftp2.census.gov/geo/tiger/TIGER2009/
+ftp://ftp2.census.gov/geo/tiger/TIGER2008/
+ftp://ftp2.census.gov/geo/tiger/TIGER2007FE/
+}
+
+The numbered ZIP files starting with 'TGR26" contain county data.
+It turns out that Michigan has more counties than many other states.
+So it may not be a completely representative sample.
+Regardless, you will definitely want to use a download tool if you are planning on using multiple counties or states.
+
+\section{Looking at the Raw TIGER Data}
+It may be instructive to look at the files, from the large to the small.
+Starting with the collection of files that make up a state, we look at the files that describe a county, and then look at the details that describe a road segment somewhere within that county.
+
+The state and county files are numbered in a specific way.
+Each state is identified by two digits, and each county of the state is identified by the last three digits.
+Michigan, for example, is state number 26.
+So all Michigan TIGER files start with TGR26, followed by the three-digit county code.
+The county codes are not contiguous for some reason.
+They tend to be mostly odd numbers.
+
+Working inward, here are the contents of a typical uncompressed county file called TGR26001.
+According to\todo{make ref: [TIGER/Line Metadata (ASCII)]}, this represents Alcona County, MI:
+
+\todo{add cxref to the TIGER txt doc above}
+
+\begin{verbatim}
+>ls TGR26001
+TGR26001.MET TGR26001.RT5 TGR26001.RTA TGR26001.RTI
+TGR26001.RTS TGR26001.RT1 TGR26001.RT6 TGR26001.RTC
+TGR26001.RTM TGR26001.RTT TGR26001.RT2 TGR26001.RT7
+TGR26001.RTE TGR26001.RTP TGR26001.RTZ TGR26001.RT4
+TGR26001.RT8 TGR26001.RTH TGR26001.RTR
+\end{verbatim}
+
+
+Each county zip file contains a number of RT\footnote{record type - probably belongs in definition of terms instead of here} files.
+These files contain a variety of different landmarks, roads, bodies of water, etc.
+There is documentation at the TIGER site that describes them all TIGER/Line Data Dictionary\todo{make proper URL http://www.census.gov/geo/www/tiger/tiger2006se/a6sech6.txt}.
+However, the agents simulation only use data from the RT1 and RT2 files.
+\todo{The RT1 and RT2 records would be nice to have in a figure, but I can't fscking figure it out yet.}
+
+Here are sample records from RT1 and RT2.
+
+\emph{RT1}
+\begin{verbatim}
+>head -1 TGR26001\TGR26001.RT1
+10906 135884517 K Wissmiller Rd A41 3169 3499 3168
+352410114874548745 26260010013482034820 98060098060010051012
+-83395134+44569328 -83381740+44569307
+\end{verbatim}
+
+\emph{RT2}
+\begin{verbatim}
+>head -1 TGR26001\TGR26001.RT2
+20906 135884517 1 -83391780+44569334 +000000000
++00000000+000000000+00000000+000000000+00000000
++000000000+00000000+000000000+00000000+000000000
++00000000+000000000+00000000+000000000+00000000
++000000000+00000000
+\end{verbatim}
+
+These records are a small part of the data that describes one section of road somewhere in Michigan.
+The basic unit in the RT1 and RT2 records are these line segments.
+The endpoints of the road and the section of road itself, translate naturally into the nodes and edge of a simple graph.
+It may not be readily apparent, but the latitude and longitude for both ends of the road segment are in there.
+Those are two\cite{colu92} of the crucial pieces of the geograph puzzle.
+\todo{WTF is colu92?}
+
+The next step is to prepare the data for importing into an SQL database.
+Several tools were written specifically for this purpose.
+We will look at them next.
+
+\section{Munging the Raw Data}
+\todo{Notes
+
+(1) The relevant rtf documentation (hg/tags/graphs\_0.6/etc/ documentation/ tools-for-working-with-TIGER-data.rtf) is out of date.
+It refers to an old shell script and a bunch of utilities that were developed separately, before everything was unified into the tigerutils module.
+TODO: figure out where to write the documentation for this section such that it can be reused in multiple places.
+
+(2) This whole section ("Munging the raw data") should be written from a tutorial point of view.
+In other words, describe how to use the tools, and let the API speak for itself.}
+
+A number of tools were written to extract the data, and transform it into usable latitude and longitude coordinates, along with a large number of other descriptive pieces.
+Other tools were written to create the databases and import the data into a database.
+Here's a quick summary of the tools:
+
+\todo{PICKUP HERE}
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Pellentesque dignissim.
 Praesent tortor.
 In fringilla feugiat nisi.
 Fusce a elit.
@@ -880,30 +1034,6 @@ Sed vestibulum quam ac mauris.
 Donec vehicula risus.
 Maecenas vitae arcu quis tellus fringilla porttitor.
 Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
-
-Duis ut sapien.
-Proin sit amet magna et est pharetra vestibulum.
-Pellentesque sed diam et erat sollicitudin pharetra.
-Suspendisse potenti.
-Sed fringilla sagittis urna.
-Morbi ullamcorper aliquet leo.
-Donec elit nunc, rutrum at, ultrices at, pretium a, est.
-Etiam non dolor non enim malesuada condimentum.
-Curabitur vitae sapien.
-Nulla neque.
-
-Donec odio nibh, varius in, dictum nec, egestas in, nisl.
-Mauris varius mi non nunc.
-Praesent porta enim in nibh.
-Donec ac mi varius ante malesuada dignissim.
-Nunc aliquet tortor ac lectus.
-Sed pede.
-Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
-Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
-Duis ullamcorper molestie mauris.
-Sed eu ipsum nec eros luctus elementum.
-Suspendisse ultrices sollicitudin nunc.
-
 
 \chapter{Annotated Config Files}
 All configuration for the simulation is done through ini-style configuration files \todo{http://en.wikipedia.org/wiki/INI\_file}.
