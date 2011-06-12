@@ -154,7 +154,7 @@ The rest of the paper consists of the following sections:
     Several simulations are run and their data plotted and reported here.}
   \item{CONCLUSION brings things to a close, and enumerates a number of possible future enhancements.
     There are a number of ways this program could be expanded upon, and the source code will be freely available upon acceptance of this report.}
-  \item{APPENDIX A: USING TIGER/LINE DATA describes how raw data from the U.S. Census Bureau, representing roads throughout the United States and it's territories, is converted in real-time into line segments, and how those line segments are knit together to make network graphs upon which the simulations are run.}
+  \item{APPENDIX A: USING TIGER/LINE DATA describes how raw data from the U.S.~Census Bureau, representing roads throughout the United States and it's territories, is converted in real-time into line segments, and how those line segments are knit together to make network graphs upon which the simulations are run.}
   \item{APPENDIX B: ANNOTATED CONFIG FILES enumerates the large collection of both agent and graph data that can be customized at run-time, including full annotations about each setting.}
   \item{APPENDIX C: LIST OF OPEN SOURCE SOFTWARE\ldots}
   \item{APPENDIX D: SOURCE CODE\ldots}
@@ -183,11 +183,11 @@ This paper uses the Belief-Desire-Intention (BDI) agent model to formulate a res
 The last paper is a review of multi-agent systems (MAS) used for transport logistics\cite{davidsson2005aab}.
 My software is classified according to this scheme.
 
-\section{Centralized and Distributed Multiagent Traffic Systems}
+\section[Multiagent Traffic Systems]{Centralized and Dstributed Multiagent Traffic Systems}
 Reviewing decision support systems (DSS) for use in traffic management.
 
 \subsection{Regional Agent Coordination with TRYS and TRYSA$_{2}$}
-Hern\'{a}ndez et al.\cite{hernandez2001} describes a pair of closely related intelligent traffic management systems (ITMS).
+Hern\'{a}ndez et al.\cite{hernandez2001}~describes a pair of closely related intelligent traffic management systems (ITMS).
 The TRYS\footnote{The acronym is not identified in the paper.} system is implemented and in use in Barcelona, Spain.
 TRYSA$_{2}$\footnote{TRYS Autonomous Agents} is developed only to the prototype level at time of publication, but was validated with the same data as the first system.
 Both systems partition a highly congested local traffic network into a series of overlapping problem areas, which are monitored by traffic control agents.
@@ -198,7 +198,7 @@ A human operator makes the final decision on how the plans are used.
 These systems are fundamentally different from the approach I have taken for several reasons.
 The first, and most important difference is that these are not simulations.
 Second, they are open systems in the sense that the outputs are ``processed'' by a traffic engineer, as opposed to a closed and terminal system, where the final result is the end of the simulation, rather than inputs to an ``offline'' system.
-Finally, the focus here is on the traffic network exclusively, with zero representation of the users of the network, i.e. drivers and passengers.
+Finally, the focus here is on the traffic network exclusively, with zero representation of the users of the network, i.e.~drivers and passengers.
 Regardless, there are some interesting contrasts.
 
 TRYS is a centralized multiagent system.
@@ -239,9 +239,9 @@ The paper describes the situation and the response to it this way:
 
 \begin{quote}
 There is a conflict of interest respecting the way in which local signal plans are adapted.
-The essential idea is that the more autonomous an agent is (i.e. the less its local utility can be influenced by others), the more weight will have its opinion respecting which local plans to modify and how to adapt them.
+The essential idea is that the more autonomous an agent is (i.e.~the less its local utility can be influenced by others), the more weight will have its opinion respecting which local plans to modify and how to adapt them.
 Still, sometimes the resulting basic coordination does not lead to globally optimal control plans, so the system designer can issue rights or prohibitions for some agents to use control devices in certain ways.
-By this, he modifies the degree of autonomy of some agents, biasing the outcome of coordination (i.e. the resulting global signal plan) in a desired direction.
+By this, he modifies the degree of autonomy of some agents, biasing the outcome of coordination (i.e.~the resulting global signal plan) in a desired direction.
 \end{quote}
 
 The agents choose local signal plans, but they still need to coordinate with one another to settle on a globally consistent signal plan.
@@ -306,12 +306,12 @@ Its only purpose it to store traffic data and provide immediate feedback to the 
 
 When deciding on a traffic light pattern, most communication takes place between the LTAs and the CTAs, with the ITAs providing stored data as necessary.
 In order for the CTA to calculate a global optimum for a given intersection, it must collect data from all neighbors of that intersection's LTA.
-The ITA provides data about traffic levels, congestion, accidents, etc. at each of the intersections requested by the CTA.
+The ITA provides data about traffic levels, congestion, accidents, etc.,~at each of the intersections requested by the CTA.
 The CTA calculates a traffic light pattern and compares it to that proposed by the LTA.
 \marginpar{Do I need something here about the LTAs generating their own proposed traffic light pattern for review by the CTA?}
 If there is a significant difference between them, a balance between the local and global optimums must be reached, and communicated to the LTA\footnote{The authors do not describe how they negotiate this balance.}.
 Traffic sensors provide data to the ITAs.
-Collected data includes the current state of each traffic light, the direction of traffic movement, e.g. North heading North or West, or South going East, and the time remaining for the light in its current state.
+Collected data includes the current state of each traffic light, the direction of traffic movement, e.g.,~North heading North or West, or South going East, and the time remaining for the light in its current state.
 The LTAs include an expert system that uses this data to calculate a locally optimal light pattern, without regard to other intersections.
 Following this the LTA sends a message to the CTA, which may adjust the LTA's light pattern, based on the recommendation of its own expert system, to accomodate the needs of the global network.
 
@@ -434,7 +434,7 @@ They do not make the distinction between cooperative and coordinative agents.
 In any event, my system includes both cooperative and competitive agents.
 
 \marginpar{Drop paragraph starting with ``The article mentions\ldots''?}
-The article mentions Multi Agent Based Simulations (MABS), a term that simply means that the agents in the simulation may have different roles, e.g. a company, a truck, a customer, etc.
+The article mentions Multi Agent Based Simulations (MABS), a term that simply means that the agents in the simulation may have different roles, e.g.,~a company, a truck, a customer, etc.
 We've seen similar examples of this with the LTAs and CTAs in the France paper.
 My agents are designed similarly.
 But this is the first term I've found to describe agent partitioning based on role.
@@ -623,7 +623,7 @@ The waiting customers are stored in a wait queue, while the customers who are at
 
 The second resource type is the Level.
 It is used when you want to model something of a more continuous nature.
-This type is useful for simulations where you're concerned with the supply of something, e.g., fuel in an airplane.
+This type is useful for simulations where you're concerned with the supply of something, e.g.,~fuel in an airplane.
 The available quantity of the resource is described using a scalar value.
 However, Levels do not maintain object state.
 If you need to model the resource as an object with behavior and state, then a Level may not be the right choice.
@@ -791,7 +791,7 @@ Descriptions of the configuration files are here: \todo{[sec:The-agents-default.
 \section{The Interactive Environment}
 Nothing here yet\ldots
 
-\marginpar{This section will describe the command-line UI. I don't know whether to demo the program here, or just focus on the mechanical parts (e.g., userInput(), the file caching, etc.), and show it in use somewhere else. It probably makes sense to demo the program in the results section.}
+\marginpar{This section will describe the command-line UI. I don't know whether to demo the program here, or just focus on the mechanical parts (e.g.,~userInput(), the file caching, etc.), and show it in use somewhere else. It probably makes sense to demo the program in the results section.}
 
 % results %
 \chapter{Results}
@@ -878,17 +878,17 @@ Suspendisse ultrices sollicitudin nunc.
 It's more work, but you get more realistic simulations.}}
 \vspace{1cm}
 
-The U.S. Census Bureau provides free access to the raw geographic data that is used for the simulations.
+The U.S.~Census Bureau provides free access to the raw geographic data that is used for the simulations.
 It is called TIGER.\footnote{This is an acronym for Topologically Integrated Geographic Encoding and Referencing.}
 
-The Census Bureau provides data only -- there are no GIS or mapping tools available with TIGER.
+The Census Bureau provides data only---there are no GIS or mapping tools available with TIGER.
 On the other hand, the data they provide is exhaustive.
 There is much more detail here than is needed to generate geographical graphs.
 Several tools were developed as part of this project to extract the necessary pieces and transform the data into a form suitable for importing into an SQL database.
 
 \section{Getting the Datasets}
 The first thing to decide is how much data you want, and from what region.
-This is U.S. Census bureau data, so it covers the United States of America, and four U.S. Island Areas: American Samoa, Guam, Northern Mariana Islands, and U.S. Virgin Islands.
+This is U.S.~Census bureau data, so it covers the United States of America, and four U.S.~Island Areas: American Samoa, Guam, Northern Mariana Islands, and U.S.~Virgin Islands.
 
 For all practical purposes, you have two choices: county (or county equivalent) or state.
 The geographic data is grouped by state, and within each state, by county.
