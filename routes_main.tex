@@ -2,8 +2,11 @@
 % LaTeX examples: http://denethor.wlu.ca/latex/
 
 % List of things TODO
-% add backrefs      : href{http://www.latex-community.org/forum/viewtopic.php?f=5&t=3722
-%
+% 1. add backrefs   : href{http://www.latex-community.org/forum/viewtopic.php?f=5&t=3722
+% 2. check that periods that don't end sentences are not "stretched"
+%                   : http://www.math.tamu.edu/~boas/courses/math696/LaTeX-tips-for-text.html
+%    see #7 here    : http://www.reed.edu/cis/help/latex/intro
+% 3. 
 
 % change the type from draft to final to see the hyperlinks
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,final]{report}
@@ -32,6 +35,7 @@
 \tableofcontents
 \listoffigures
 \listoftables
+%\setlength{\parindent}{2in}
 
 % Break lines at sentences for version control sake.  Good stuff here:
 % http://stackoverflow.com/questions/193298/best-practices-in-latex/196724#196724
@@ -169,6 +173,7 @@ The rest of the paper consists of the following sections:
 \chapter{RelatedWork}
 \section{Introduction}
 In this section I examine features found in other multiagent systems to see how they contrast with my system.
+
 The focus in the applied literature is on traffic and road network simulations.
 Two of the papers describe centralized versus distributed simulation systems\cite{france2003mso,hernandez2001}.
 One of them includes an implemented and installed system, while the other is evaluated using a mathematical formula describing variable levels of traffic congestion.
@@ -232,10 +237,12 @@ In short, the agents are no longer fully autonomous.
 
 The paper describes the situation and the response to it this way:
 
-\quote{There is a conflict of interest respecting the way in which local signal plans are adapted.
+\begin{quote}
+There is a conflict of interest respecting the way in which local signal plans are adapted.
 The essential idea is that the more autonomous an agent is (i.e. the less its local utility can be influenced by others), the more weight will have its opinion respecting which local plans to modify and how to adapt them.
 Still, sometimes the resulting basic coordination does not lead to globally optimal control plans, so the system designer can issue rights or prohibitions for some agents to use control devices in certain ways.
-By this, he modifies the degree of autonomy of some agents, biasing the outcome of coordination (i.e. the resulting global signal plan) in a desired direction.}
+By this, he modifies the degree of autonomy of some agents, biasing the outcome of coordination (i.e. the resulting global signal plan) in a desired direction.
+\end{quote}
 
 The agents choose local signal plans, but they still need to coordinate with one another to settle on a globally consistent signal plan.
 This is similar to the task of the coordinator agent in TRYS.
@@ -251,7 +258,6 @@ In other words, lower quality plans are dropped from consideration.
 In stage 3 a set of local signal plans are selected by lottery, and the results are shared with all agents.
 This concludes the work of the autonomous agents in TRYSA$_{2}$.
 
-\marginpar{need something here to break up the flow and signal that we're starting a new section}
 At this stage in both systems the selected control plans are ready for review by the traffic engineer.
 
 \subsection{Comparison with Routes}
@@ -262,7 +268,6 @@ That and the fact that it was a multiagent traffic management study, made it a u
 One superficial similarity of TRYS and TRYSA$_{2}$ with my system is in the representation of the physical structure of the traffic network.
 It uses a declarative description of the network as a graph with nodes and links together with abstraction functions associated to components, described here as ``static information about the topological structure of the problem area''.
 
-\marginpar{need something here to break up the flow and signal that we're starting a new section}
 Next we look at another multiagent system for optimizing an urban traffic network.
 
 \subsection{Local and Global Agent Coordination}
@@ -428,7 +433,7 @@ All agents are classified as either benevolent (cooperative) or selfish (competi
 They do not make the distinction between cooperative and coordinative agents.
 In any event, my system includes both cooperative and competitive agents.
 
-\marginpar{Drop this paragraph?}
+\marginpar{Drop paragraph starting with ``The article mentions\ldots''?}
 The article mentions Multi Agent Based Simulations (MABS), a term that simply means that the agents in the simulation may have different roles, e.g. a company, a truck, a customer, etc.
 We've seen similar examples of this with the LTAs and CTAs in the France paper.
 My agents are designed similarly.
@@ -635,10 +640,7 @@ The waitingFares queue of the Agents class is a SimPy Store.
 As the name suggests, it holds references to Fare objects.
 The usage is different here though, as Agents is a Process, and it contains a Store attribute.
 To ensure that there is only one waitingFares queue, it is a static (class) attribute that is shared by all Agent types.
-So the Fares share a Store object that is maintained by the group for the use of all Agents, including the Taxis.
-
-% NB: The todo below was nested inside following footnote and it breaks things pretty badly.  Don't do that.
-\footnote{To keep things manageable, the waitingFares queue is centralized store.
+So the Fares share a Store object that is maintained by the group for the use of all Agents, including the Taxis.\footnote{To keep things manageable, the waitingFares queue is centralized store.
 I did a lot of work with ADOPT, a novel approach to distributed constraint optimization (DCOP), but eventually dropped it as too complex to implement in a reasonable amount of time.
 Regardless, this is not a fully decentralized system.}
 \marginpar{Link to Modi ADOPT article. (Include in bibliography? I didn't use it in the paper, so maybe not, but it's convenient to store it there.)}
@@ -650,7 +652,7 @@ When a Fare is created, it's \texttt{run()} method is a \texttt{yield} call, whi
 
 This is the first example of Python's \texttt{yield} statement, which all Process objects use to turn PEMs into Python generators.
 This allows the method to be paused and later resumed without losing its current state.
-Here it is putting itself onto the waitingFares queue by first putting itself into a one-element list ([self]), and then putting the contents of that list onto the waitingFares queue.
+Here it is putting itself onto the waitingFares queue by first putting itself into a one-element list (\texttt{[self]}), and then putting the contents of that list onto the waitingFares queue.
 All Process objects must have a PEM with at least one yield statement.
 
 \section{The Agents}
@@ -719,13 +721,13 @@ They are similar in concept, but with different implementations, for the coopera
 The combination of negotiation protocol and simType identifies the major characteristics of a simulation.
 The combinations are
 
-\marginpar{add some vertical space here}
+\vspace{1cm}
 \begin{itemize}
   \item{FIFO/comperative \& FIFO/competitive}
   \item{closestFare/comperative \& closestFare/competitive}
   \item{mixedMode/comperative \& mixedMode/competitive}
 \end{itemize}
-\marginpar{add some vertical space here}
+\vspace{1cm}
 
 Any simulation uses exactly one of them.
 It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
@@ -872,9 +874,9 @@ Suspendisse ultrices sollicitudin nunc.
 % appendices %
 \appendix
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
-\fbox{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
+\framebox[3in][c]{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
 It's more work, but you get more realistic simulations.}}
-\marginpar{add some vertical space here}
+\vspace{1cm}
 
 The U.S. Census Bureau provides free access to the raw geographic data that is used for the simulations.
 It is called TIGER.\footnote{This is an acronym for Topologically Integrated Geographic Encoding and Referencing.}
@@ -1071,7 +1073,7 @@ The agents configuration includes the sections \emph{runtime} and \emph{dev}.
 \marginpar{Is runtime and dev still accurate?}
 
 \textbf{[runtime]}
-\marginpar{add some vertical space here}
+\vspace{1cm}
 \textbf{useGUI}\todo{how to offset some constant width?}\emph{Type: Boolean.} Specifies whether or not to produce graphical results.
 This is a top-level option.
 If it is False,\ldots is ignored.
