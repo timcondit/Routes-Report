@@ -1,6 +1,10 @@
 % preliminaries %
 % LaTeX examples: http://denethor.wlu.ca/latex/
 
+% List of things TODO
+% add backrefs      : href{http://www.latex-community.org/forum/viewtopic.php?f=5&t=3722
+%
+
 % change the type from draft to final to see the hyperlinks
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,final]{report}
 
@@ -8,8 +12,7 @@
 % helpful: http://magic.aladdin.cs.cmu.edu/2005/08/25/setting-margin-in-latex/
 % TODO Consider using margin=1in for final paper, and margin=1.75in for the draft so I can see the TODO comments.
 \usepackage[dvips,letterpaper,margin=1.75in]{geometry}
-% hyperref must be the last package
-\usepackage{hyperref}
+\usepackage[colorlinks=true]{hyperref} % hyperref must be the last package
 
 % front matter %
 \begin{document}
@@ -212,7 +215,7 @@ Whereas TRYS uses a more linear form of communication between the traffic contro
 See figure~\ref{fig:TRYS-and-TRYSA2} on page~\pageref{fig:TRYS-and-TRYSA2}.
 
 \begin{figure}[h]
-  \includegraphics{figures/TRYS-and-TRYSA2.PNG}
+  \includegraphics[width=0.9\textwidth]{figures/TRYS-and-TRYSA2.PNG}
   \caption{Centralized (TRYS) and decentralized coordination (TRYSA$_{2}$).}
   \label{fig:TRYS-and-TRYSA2}
 \end{figure}
@@ -287,7 +290,7 @@ Each LTA and CTA communicate directly with the ITA, but it does not process any 
 Its only purpose it to store traffic data and provide immediate feedback to the other agents.
 
 \begin{figure}[h]
-  \includegraphics{figures/LTAs-and-CTA.PNG}
+  \includegraphics[width=0.9\textwidth]{figures/LTAs-and-CTA.PNG}
   \caption{Layout of Local and Coordinator Traffic Agents.}
   \label{fig:LTAs-and-CTA}
 \end{figure}
@@ -374,7 +377,7 @@ Finally, with \emph{decision making under uncertainty}, neither agent knows anyt
 Data collection is entirely speculative. See figure~\ref{fig:uncertainty-management} on page~\pageref{fig:uncertainty-management} for a summary.
 
 \begin{figure}[h]
-  \includegraphics{figures/uncertainty-management}
+  \includegraphics[width=0.9\textwidth]{figures/uncertainty-management}
   \caption{Modeling agents' interactions using BDI \& three types of decision making.}
   \label{fig:uncertainty-management}
 \end{figure}
