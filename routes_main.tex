@@ -722,13 +722,13 @@ They are similar in concept, but with different implementations, for the coopera
 The combination of negotiation protocol and simType identifies the major characteristics of a simulation.
 The combinations are
 
-\vspace{1cm}
+\vspace{0.5cm}
 \begin{itemize}
   \item{FIFO/comperative \& FIFO/competitive}
   \item{closestFare/comperative \& closestFare/competitive}
   \item{mixedMode/comperative \& mixedMode/competitive}
 \end{itemize}
-\vspace{1cm}
+\vspace{0.5cm}
 
 Any simulation uses exactly one of them.
 It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
@@ -877,7 +877,7 @@ Suspendisse ultrices sollicitudin nunc.
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
 \framebox[3in][c]{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
 It's more work, but you get more realistic simulations.}}
-\vspace{1cm}
+\vspace{0.5cm}
 
 The U.S.~Census Bureau provides free access to the raw geographic data that is used for the simulations.
 It is called TIGER.\footnote{This is an acronym for Topologically Integrated Geographic Encoding and Referencing.}
@@ -1071,55 +1071,109 @@ All changes should be made in the appropriate \mbox{overrides.ini}.
 \section{The Agents default.ini}
 \todo{add link to sec:The-agents-default.ini}
 The agents configuration includes the sections \emph{runtime} and \emph{dev}.
-\marginpar{Is runtime and dev still accurate?}
 
-\textbf{[runtime]}
-\vspace{1cm}
-\textbf{useGUI}\todo{how to offset some constant width?}\emph{Type: Boolean.} Specifies whether or not to produce graphical results.
+\vspace{0.5cm}
+\begin{description}
+\item[{[runtime]}]
+
+\item[useGUI]Specifies whether or not to produce graphical results.
 This is a top-level option.
-If it is False,\ldots is ignored.
-\emph{Default: False.}
-\todo{What is ignored?
-Leave that comment out?}
+If it is False \ldots is ignored.
+\newline{\emph{Type: bool; default: False}}
+\todo{What is ignored?}
 
+\item[mapType]Valid values are grid or graph.
+If grid, the simulation area is a square grid bounded by gridMin and gridMax.
+If graph, TIGER/Line\textsuperscript{\tiny{\copyright}} data is chosen by the user and the graph is populated dynamically.
+\newline{\emph{Type: string; default: grid}}
 
+\item[verbose] How much data do you want to see at runtime?
+Note, if verbose is False, prettyPrint is ignored.
+\newline{\emph{Type: Boolean; default: False}}
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Pellentesque dignissim.
-Praesent tortor.
-In fringilla feugiat nisi.
-Fusce a elit.
-Maecenas placerat facilisis magna.
-Mauris dolor nisi, consequat quis, adipiscing et, consequat semper, odio.
-In eget lacus.
-Pellentesque mauris.
-Sed vestibulum quam ac mauris.
-Donec vehicula risus.
-Maecenas vitae arcu quis tellus fringilla porttitor.
-Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
+\item[prettyPrint]Flag to set printing options.
+Note, this option is ignored if verbose is False.
+\newline{\emph{Type: Boolean; default: False}}
 
-Duis ut sapien.
-Proin sit amet magna et est pharetra vestibulum.
-Pellentesque sed diam et erat sollicitudin pharetra.
-Suspendisse potenti.
-Sed fringilla sagittis urna.
-Morbi ullamcorper aliquet leo.
-Donec elit nunc, rutrum at, ultrices at, pretium a, est.
-Etiam non dolor non enim malesuada condimentum.
-Curabitur vitae sapien.
-Nulla neque.
+\item[numTaxis]This is the total number of Taxis that this simulation will use.
+They are all created at the start of the simulation.
+NOTE: Setting this value to 0 will cause the program to crash with an IndexError.
+\todo{Should catch this and throw some kind of config error, rather than letting the program crash.}
+Valid values are positive integers (1 and up).
+\newline{\emph{Type: int; default: 5}}
 
-Donec odio nibh, varius in, dictum nec, egestas in, nisl.
-Mauris varius mi non nunc.
-Praesent porta enim in nibh.
-Donec ac mi varius ante malesuada dignissim.
-Nunc aliquet tortor ac lectus.
-Sed pede.
-Donec lobortis, tellus vel vehicula tristique, lectus diam cursus sapien, id ultricies odio metus sed ipsum.
-Fusce sapien mauris, vehicula non, placerat at, rhoncus sed, sem.
-Duis ullamcorper molestie mauris.
-Sed eu ipsum nec eros luctus elementum.
-Suspendisse ultrices sollicitudin nunc.
+\item[numFares]This is the number of Fares that are generated at the start of the simulation, before the simulation is activated.
+Other Fares will be created when the simulation runs, at an average rate specified below (meanFareGenerationRate).
+Set this value to 0 to create all Fares after the simulation has started.
+Valid values are non-negative integers (0 and up).
+\newline{\emph{Type: int; default: 5}}
+
+\item[meanFareGenerationRate]This is the average rate at which Fares will be created after the simulation is running.
+If the mean is 0, no Fares will be created.
+If the mean is very low, Fares will be created very rapidly.
+Conversely, if the mean is high (say, over 30 or so), Fares will be created relatively slowly.
+Valid values are non-negative integers (0 and up).
+\newline{\emph{Type: int; default: 7}}
+
+\item[storeCapacity]The Store is a SimPy Resource that holds (in this case) Fares waiting for pickup.
+If a Taxi is unable to find an eligible Fare from the queue of waiting Fares, it winds up in here until an eligible Fare comes along.
+Valid values are non-negative integers.
+\newline{\emph{Type: int; default: 40}}
+
+\item[simulationTime]\todo{add a description}
+Valid values are non-negative integers (0 and up).
+\newline{\emph{Type: int; default: 100}}
+
+\item[gridMin]Minimum grid size, in other words, the origin.
+Valid values are non-negative integers (0 and up), although anything other than 0 currently doesn't make much sense.
+\newline{\emph{Type: int; default: 0}}
+
+\item[gridMax]Maximum grid size, in other words, the (x,y) at the upper right hand corner.
+Valid values are gridMin or higher.
+\newline{\emph{Type: int; default: 100}}
+
+\item[taxiRangeLow]When running in mixedmode, the Taxi uses this value to determine if the Fares have been in the queue only long enough to send local broadcasts.
+Valid values are (0.0 to taxiRangeMedium).
+\newline{\emph{Type: float; default: 0.25}}
+
+\item[taxiRangeMedium]When running in mixedmode, the Taxi uses this value to determine if the Fares have been in the queue long enough to send regional broadcasts.
+Valid values are (taxiRangeLow to taxiRangeMedium).
+\newline{\emph{Type: float; default: 0.50}}
+
+\item[taxiRangeHigh]When running in mixedmode, the Taxi uses this value to determine if the Fares have been in the queue long enough to send global broadcasts.
+Valid values are (taxiRangeMedium to 1.00).
+\newline{\emph{Type: float; default: 1.00}}
+
+\item[simType]Valid values are FIFO, closestfare, and mixedmode.
+\newline{\emph{Type: string; default: FIFO}}
+
+\item[negotiationProtocol]Valid values are cooperate and compete.
+\newline{\emph{Type: string; default: cooperate}}
+\todo{move simType and NP up with mapType?}
+
+\item[distanceCalculation]\todo{add a description}
+Valid values are drivingDistance or straightLine (hypotenuse).
+\newline{\emph{Type: string; default: straightLine}}
+
+\item[randomSeed]A big number used to seed the random number generator.
+We use this to generate consistent results.
+If the seed is used correctly, we can run a simulation and get the same results repeatedly.
+\newline{\emph{Type: int; default: 0}}
+
+\vspace{0.5cm}
+\item[{[dev]}]
+
+\item[tracing]Run simulation with SimPy's tracing enabled?
+\newline{\emph{Type: Boolean; default: False}}
+
+\item[debug]If True, prints a bunch of extra information to standard output.
+\newline{\emph{Type: Boolean; default: False}}
+
+\item[setTrace]Debugging aid, for development only.
+Use this to set something like breakpoints in the code.
+\newline{\emph{Type: Boolean; default: False}}
+
+\end{description}
 
 
 \chapter{List of Open Source Software}
