@@ -43,6 +43,7 @@
 % abstract (no page number) %
 \begin{abstract}
 Routes is a multiagent simulation of a Taxi service and its Fares.
+
 All Taxis are created at the beginning of the simulation.
 While the program is running, Fares enter the system at random times in random places.
 Rather than requesting pickup through a central dispatch, the Fares broadcast their own locations locally, then regionally, and finally throughout the entire area, if needed.
@@ -223,7 +224,7 @@ See figure~\ref{fig:TRYS-and-TRYSA2} on page~\pageref{fig:TRYS-and-TRYSA2}.
 
 \begin{figure}[h]
   \includegraphics[width=0.9\textwidth]{figures/TRYS-and-TRYSA2.PNG}
-  \caption{Centralized (TRYS) and decentralized coordination (TRYSA$_{2}$).}
+  \caption{Centralized (TRYS) and decentralized (TRYSA$_{2}$) coordination.}
   \label{fig:TRYS-and-TRYSA2}
 \end{figure}
 
@@ -356,7 +357,7 @@ BDI is described here to put it into context as part of the overall definition o
 It is a frequently updated attribute described by the function \[\wp\emph{(Belief)}\times \emph{P}\to\wp\emph{(Belief)}\] where \emph{P} is the agent's current precept and current beliefs.
 \emph{Desire} is the set of options an agent can use to achieve its intentions.
 It is derived from the agent's belief and intentions and is described as \[\wp\emph{(Belief)}\times \wp\emph{(Intentions)}\to\wp\emph{(Desire)}\]
-The agent's \emph{intention} is simply what it wants to do or accomplish\footnote{This paper does not include a precise definition of intention}.
+The agent's \emph{intention} is simply what it wants to do or accomplish.\footnote{This paper does not include a precise definition of intention}
 The new piece, the \emph{knowledge base}, expands on the concept of the agent's intention.
 It is a database of related information on a particular subject that describes how to do a certain task.
 The four attributes in the extended BDI agent model are not sufficient to model an agent's relationships with its cohorts.
@@ -415,7 +416,7 @@ While the focus is primarily on logistics, I classify my work as it fits into th
 
 The article defines the concepts of logistics in some depth.
 Here they are talking about transport logistics, or the movement of goods from one place to another, often through multiple means, for example rail to ship to rail.
-The most succint definition of logistics that I found is ``Logistics means having the right thing, at the right place, at the right time.''\footnote{\url{http://www.logisticsworld.com/logistics.htm}}
+The most succinct definition of logistics that I found is ``Logistics means having the right thing, at the right place, at the right time.''\footnote{\url{http://www.logisticsworld.com/logistics.htm}}
 My system is neither a traffic management nor a logistics flow model, unless you consider the Fares as product to be moved from place to place.
 Nevertheless, there are parallels and the classification is enlightening.
 
@@ -754,7 +755,7 @@ Each Taxi queries the list of waiting Fares, and finds the geographically closes
 Unless the waiting Fares queue is empty, the Taxi should always get a Fare in the cooperative simulation.
 Distance is a configurable setting.
 It is measured either ``as the crow flies'', or by surface street distance.
-See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage ...}
+See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage\ldots}
 
 The competitive closestFare simulation is similar, except for once again the Taxis have no knowledge of one another, and only one of them will pick up any given Fare.
 So the chosen Fare must be the one that is closest to them, and they must be closest to the Fare relative to the other Taxis as well.
@@ -976,8 +977,8 @@ TGR26001.RT8 TGR26001.RTH TGR26001.RTR
 
 Each county zip file contains a number of RT\footnote{record type - probably belongs in definition of terms instead of here} files.
 These files contain a variety of different landmarks, roads, bodies of water, etc.
-The \href{http://www.census.gov/geo/www/tiger/tiger2006se/a6sech6.txt}{TIGER/Line Data Dictionary} describes them all .
-However, the agents simulation only use data from the RT1 and RT2 files.
+The \href{http://www.census.gov/geo/www/tiger/tiger2006se/a6sech6.txt}{TIGER/Line Data Dictionary} describes them all.
+However, the agents simulation only uses data from the RT1 and RT2 files.
 \marginpar{The RT1 and RT2 records would be nice to have in a figure, but I can't fscking figure it out yet.}
 
 Here are sample records from RT1 and RT2.
@@ -1061,11 +1062,11 @@ Donec enim nulla, ornare sit amet, lacinia id, bibendum scelerisque, sapien.
 
 \chapter{Annotated Config Files}
 All configuration for the simulation is done through \href{http://en.wikipedia.org/wiki/INI\_file}{ini-style configuration files}.
-The agents use conf/agents/defaults.ini and conf/agents/overrides.ini.
-Similarly, the graphs use conf/graphs/defaults.ini and conf/graphs/overrides.ini.
-Both defaults.ini define default settings for the simulations.
+The agents use \mbox{conf/agents/defaults.ini} and \mbox{conf/agents/overrides.ini}.
+Similarly, the graphs use \mbox{conf/graphs/defaults.ini} and \mbox{conf/graphs/overrides.ini}.
+Both \mbox{defaults.ini} files define default settings for the simulations.
 Nothing should be changed here.
-All changes should be made in the appropriate overrides.ini.
+All changes should be made in the appropriate \mbox{overrides.ini}.
 
 \section{The Agents default.ini}
 \todo{add link to sec:The-agents-default.ini}
