@@ -875,7 +875,7 @@ Suspendisse ultrices sollicitudin nunc.
 % appendices %
 \appendix
 \chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
-\framebox[3in][c]{\parbox[t]{3in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
+\framebox[4in][c]{\parbox[t]{4in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
 It's more work, but you get more realistic simulations.}}
 \vspace{0.5cm}
 
@@ -1068,11 +1068,10 @@ Both \mbox{defaults.ini} files define default settings for the simulations.
 Nothing should be changed here.
 All changes should be made in the appropriate \mbox{overrides.ini}.
 
-\section{The Agents default.ini}
+\section{The default Agent configuration}
 \todo{add link to sec:The-agents-default.ini}
-The agents configuration includes the sections \emph{runtime} and \emph{dev}.
 
-\vspace{0.5cm}
+The Agent configuration includes the sections \emph{runtime} and \emph{dev}.
 \begin{description}
 \item[{[runtime]}]
 
@@ -1172,9 +1171,66 @@ If the seed is used correctly, we can run a simulation and get the same results 
 \item[setTrace]Debugging aid, for development only.
 Use this to set something like breakpoints in the code.
 \newline{\emph{Type: Boolean; default: False}}
-
 \end{description}
 
+
+\section{The default Graph configuration}
+\todo{add link to sec:The-graphs-default.ini}
+\framebox[4in][c]{\parbox[t]{4in}{Note: This section only applies if you are using the TIGER/Line\textsuperscript{\tiny{\copyright}} Census data to generate geographic graphs for your simulations.
+In that case, you should have already installed a database (
+\href{http://www.sqlite.org/}{SQLite} or
+\href{http://www.mysql.com/}{MySQL}) plus
+\href{http://www.sqlalchemy.org/}{SQLAlchemy} and
+\href{https://networkx.lanl.gov/wiki/}{NetworkX}.}}
+
+\vspace{0.5cm}
+The Graph configuration includes the sections \emph{dataprep} and \emph{dev}.
+\begin{description}
+\item[{[dataprep]}]
+\item[fetchCommand]This is the path to a download tool plus any options needed to download files nonrecursively.
+The graphs package includes wget.exe and I recommend using it, but you can use a different download tool.
+If it's not on your PATH, you will have to specify its location.
+This option is used with tigerStates when a single state and county are chosen.
+Valid value is the path to a download utility.
+The default path is relative to the location of the config file in the hg (Mercurial) working directory.
+\newline{\emph{Type: string (OS path + string option); default: wget.exe}}
+
+\item[zipCommand]The path to a zip utility used to decompress the TIGER data files.
+The graphs package includes (and I recommend) 7z.exe, but you can use a different zip tool.
+If it's not on your PATH, you will have to specify its location.
+Valid value is the path to a zip utility.
+The default path is relative to the location of the config file in the hg (Mercurial) working directory.
+\newline{\emph{Type: string (OS path + string option); default: 7z.exe x}}
+
+\item[fipsMetadataUrl]This is the URL for Appendix A of the TIGER/Line Technical Documentation.
+It contains the associated FIPS codes for states and counties in ASCII text format.
+This file is used for generating the TIGER state and county chooser.
+In most cases, this value should not be changed.
+\newline{\emph{Type: string (URL); default:\newline{\mbox{\url{http://www.census.gov/geo/tigerline/app\_a03.txt}}}}}
+
+\item[fipsZipFileRoot]This is the URL of the root of the TIGER/Line ZIP files.
+It contains a list of stateCode folders, each of which contains a series of countyCode ZIP files.
+This URL is intended to be used with a stateCode and countyCode to identify a specific file to download.
+\textbf{This URL must contain a trailing slash.}
+\newline{\emph{Type: string (URL); default: \newline{\mbox{\url{http://www2.census.gov/geo/tiger/tiger2006se/}}}}}
+
+\item[excludePuertoRico]There are several graves, accents, and other things in county names in Puerto Rico that may cause problems when it comes time to parse the strings for import into the database.
+Set this value to True to strip it out from consideration when generating the set of states and counties for either random sets or for populating the chooser.
+\newline{\emph{Type: Boolean; default: False}}
+
+\item[tigerSandbox]Base of the location where data and image files are stored.
+This may be a temporary location.
+Valid values are OS paths.
+\textbf{This value must be set in \mbox{agents/conf/graphs/overrides.ini}.}
+\newline{\emph{Type: string (OS path); default: none}}
+
+\vspace{0.5cm}
+\item[{[dev]}]
+
+\item[debug]If True, prints a bunch of extra information to standard output.
+\newline{\emph{Type: boolean; default: false}}
+
+\end{description}
 
 \chapter{List of Open Source Software}
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque dignissim.
