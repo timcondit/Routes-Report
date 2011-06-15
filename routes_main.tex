@@ -11,7 +11,7 @@
 % change the type from draft to final to see the hyperlinks
 \documentclass[11pt,letterpaper,onecolumn,twoside,openright,final]{report}
 
-\usepackage{booktabs,graphicx,setspace,showframe,todonotes} %fullpage
+\usepackage{booktabs,graphicx,setspace,todonotes} %fullpage,showframe,
 % helpful: http://magic.aladdin.cs.cmu.edu/2005/08/25/setting-margin-in-latex/
 % TODO Consider using margin=1in for final paper, and margin=1.75in for the draft so I can see the TODO comments.
 \usepackage[dvips,letterpaper,margin=1.75in]{geometry}
@@ -596,7 +596,9 @@ Regardless, this is not a fully decentralized system.}
 Fares add themselves to the queue, and Taxis remove the Fares from it.
 When a Fare is created, it's \texttt{run()} method is a \texttt{yield} call, which pushes the Fare onto the waitingFares queue:
 
+\vspace{1ex}
 \texttt{yield put, self, Agent.waitingFares, [self]}
+\vspace{1ex}
 
 This is the first example of Python's \texttt{yield} statement, which all Process objects use to turn PEMs into Python generators.
 This allows the method to be paused and later resumed without losing its current state.
@@ -620,7 +622,9 @@ The PEM is where the simulated object's behaviors are defined.
 The lifecycle of a Fare is relatively simple.
 It begins when the Fare is created, and ends when it is dropped off at its destination by a Taxi, or the simulation ends, whichever comes first.
 Fares are created throughout the simulation.
-Their generation rate is configurable; it is currently configured as the inverse of an exponential distribution (see meanFareGenerationRate \todo{[sec:The-agents-default.ini]}).\todo{What's a TextPage?}
+Their generation rate is configurable; it is currently configured as the inverse of an exponential distribution (see meanFareGenerationRate in section~\ref{sec:The-default-Agent-configuration}).
+
+See figure~\ref{fig:TRYS-and-TRYSA2} on page~\pageref{fig:TRYS-and-TRYSA2}.
 The Fare uses the same PEM for all simulations.
 It collects timestamped event data starting with the initial request for pickup; then again when it is picked up; and finally when it is dropped off.
 Depending on the NP, other events may be logged as well.
@@ -677,7 +681,7 @@ The combinations are
 \end{itemize}
 
 Any simulation uses exactly one of them.
-It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
+It is specified in the Agent configuration file (section~\ref{sec:The-default-Agent-configuration}).
 The NPs control how the Fares broadcast their pickup requests, and how the Taxis decide who will make the pickup.
 \marginpar{This sounds like intro material.  (And comments should go in the side bars.)}
 
@@ -701,7 +705,7 @@ Each Taxi queries the list of waiting Fares, and finds the geographically closes
 Unless the waiting Fares queue is empty, the Taxi should always get a Fare in the cooperative simulation.
 Distance is a configurable setting.
 It is measured either ``as the crow flies'', or by surface street distance.
-See distanceCalculation \todo{[sec:The-agents-default.ini]}.\todo{Again with the TextPage\ldots}
+See distanceCalculation in section~\ref{sec:The-default-Agent-configuration}.
 
 The competitive closestFare simulation is similar, except for once again the Taxis have no knowledge of one another, and only one of them will pick up any given Fare.
 So the chosen Fare must be the one that is closest to them, and they must be closest to the Fare relative to the other Taxis as well.
@@ -1018,6 +1022,7 @@ All changes should be made in the appropriate \mbox{overrides.ini}.
 \todo{add link to sec:The-agents-default.ini}
 
 The Agent configuration includes the sections \emph{runtime} and \emph{dev}.
+\label{sec:The-default-Agent-configuration}
 \begin{description}
 \item[{[runtime]}]
 
