@@ -113,11 +113,13 @@ They ask and try to answer the following questions:
 But mostly this is a paper that explores the use of autonomous agents.
 They are characterized this way in \cite{roozemond2000act}, in a section called ``What are intelligent agents?'':
 
+\singlespacing
 \begin{quote}
 Multi-Agent Systems can be characterised by the interaction of many agents trying to solve a variety of problems in a cooperative fashion.
 Besides AI, intelligent agents should have some additional attributes to solve problems by itself in real-time; understand information; have goals and intentions; draw distinctions between situations; generalise; synthesise new concepts and/or ideas; model the world they operate in and plan and predict consequences of actions and evaluate alternatives.
 The problem solving component of an intelligent agent can be a rule-based system but can also be a neural network or a fuzzy expert system.
 \end{quote}
+\onehalfspacing
 
 The Agents in this series of simulations meet most of these criteria.
 In half the simulations the Agents work together in a cooperative fashion - in the other half, they are competitive; they are able to solve problems by themselves in real-time; they understand Fare requests for pickup (information); they have goals and intentions; and they draw distinctions between situations to determine whether to reserve (or compete for) a particular Fare.
@@ -140,27 +142,27 @@ The following terms are used throughout the paper:
 \section{Organization}
 The rest of the paper consists of the following sections:
 
-\begin{itemize}
-  \item{RELATED WORK is a review of the literature.
+\begin{description}
+  \item[Related Work] is a review of the literature.
     Research on taxis as autonomous agents is scarce, but there are traffic and road network simulations that come at the issue from a different direction.
     Instead of looking at a system of mobile agents, stationary agents at traffic lights provide information for improving the flow of traffic or routing around accidents and congestion.
     The Belief-Desire-Intention model of intelligent agents is reviewed, and the Routes agents are categorized within a framework for organizing classes of multi-agent systems for transport logistics.
-    (This is not directly related, unless people are considered goods to transport, but it clarifies a few things about the agents nevertheless.)}
-  \item{IMPLEMENTATION describes the Taxis and Fares in greater detail.
+    (This is not directly related, unless people are considered goods to transport, but it clarifies a few things about the agents nevertheless.)
+  \item[Implementation] describes the Taxis and Fares in greater detail.
     It explains the grids and graphs that make up the Agent's world, and the network traversal algorithms that calculate routes around the different regions.
     It expands on the negotiation protocols and simulation types.
-    Finally it describes the simulation software that drives the whole process, the extensive run-time configuration options, and the interactive environment within which the simulations are executed.}
-  \item{RESULTS tells the story of the simulations.
+    Finally it describes the simulation software that drives the whole process, the extensive run-time configuration options, and the interactive environment within which the simulations are executed.
+  \item[Results] tells the story of the simulations.
     Individual Agents have autonomy during runtime, but from a simulation point of view, the agents are part of larger system.
-    Several simulations are run and their data plotted and reported here.}
-  \item{CONCLUSION brings things to a close, and enumerates a number of possible future enhancements.
-    There are a number of ways this program could be expanded upon, and the source code will be freely available upon acceptance of this report.}
-  \item{APPENDIX A: USING TIGER/LINE DATA describes how raw data from the U.S.~Census Bureau, representing roads throughout the United States and it's territories, is converted in real-time into line segments, and how those line segments are knit together to make network graphs upon which the simulations are run.}
-  \item{APPENDIX B: ANNOTATED CONFIG FILES enumerates the large collection of both agent and graph data that can be customized at run-time, including full annotations about each setting.}
-  \item{APPENDIX C: LIST OF OPEN SOURCE SOFTWARE\ldots}
-  \item{APPENDIX D: SOURCE CODE\ldots}
-  \item{APPENDIX E: TRANSCRIPT OF INTERACTIVE SESSION\ldots}
-\end{itemize}
+    Several simulations are run and their data plotted and reported here.
+  \item[Conclusion] brings things to a close, and enumerates a number of possible future enhancements.
+    There are a number of ways this program could be expanded upon, and the source code will be freely available upon acceptance of this report.
+  \item[Appendix A: Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} Data] describes how raw data from the U.S.~Census Bureau, representing roads throughout the United States and it's territories, is converted in real-time into line segments, and how those line segments are knit together to make network graphs upon which the simulations are run.
+  \item[Appendix B: Annotated Config Files] enumerates the large collection of both agent and graph data that can be customized at run-time, including full annotations about each setting.
+  \item[Appendix C: List Of Open Source Software]\ldots
+  \item[Appendix D: Source Code]\ldots
+  \item[Appendix E: Transcript Of Interactive Session]\ldots
+\end{description}
 
 % use this?
 % cite: http://en.wikipedia.org/wiki/Multi-agent_system, accessed 1/11/2009
@@ -184,7 +186,7 @@ This paper uses the Belief-Desire-Intention (BDI) agent model to formulate a res
 The last paper is a review of multi-agent systems (MAS) used for transport logistics\cite{davidsson2005aab}.
 My software is classified according to this scheme.
 
-\section[Multiagent Traffic Systems]{Centralized and Dstributed Multiagent Traffic Systems}
+\section[Multiagent Traffic Systems]{Centralized and Distributed Multiagent Traffic Systems}
 Reviewing decision support systems (DSS) for use in traffic management.
 
 \subsection{Regional Agent Coordination with TRYS and TRYSA$_{2}$}
@@ -238,12 +240,15 @@ In short, the agents are no longer fully autonomous.
 
 The paper describes the situation and the response to it this way:
 
+
+\singlespacing
 \begin{quote}
 There is a conflict of interest respecting the way in which local signal plans are adapted.
 The essential idea is that the more autonomous an agent is (i.e.~the less its local utility can be influenced by others), the more weight will have its opinion respecting which local plans to modify and how to adapt them.
 Still, sometimes the resulting basic coordination does not lead to globally optimal control plans, so the system designer can issue rights or prohibitions for some agents to use control devices in certain ways.
 By this, he modifies the degree of autonomy of some agents, biasing the outcome of coordination (i.e.~the resulting global signal plan) in a desired direction.
 \end{quote}
+\onehalfspacing
 
 The agents choose local signal plans, but they still need to coordinate with one another to settle on a globally consistent signal plan.
 This is similar to the task of the coordinator agent in TRYS.
@@ -341,7 +346,7 @@ In larger systems with multiple CTAs, they are not allowed to communicate with o
 On the other hand, this is an applied approach at solving a specific problem, rather than exploring the nature of agent-based simulations.
 The first priority here is to find something that works, whereas my system is geared toward exploration, with optimality a nice side-effect, but not the primary goal.
 
-\section{Cooperative and Competitive Multiagent Systems}
+\section[Cooperative and Competitive Agents]{Cooperative and Competitive Multiagent Systems}
 Here we investigate coordination, cooperation and competition among software agents.
 
 \subsection{Extending the Belief-Desire-Intention Model}
@@ -421,7 +426,8 @@ My system is neither a traffic management nor a logistics flow model, unless you
 Nevertheless, there are parallels and the classification is enlightening.
 
 The evaluation framework consists of several pieces.
-The full list is shown in table~\ref{tab:transport-logistics-eval-framework}.
+The full list is shown in table~\ref{tab:transport-logistics-eval-framework} on page~\pageref{tab:transport-logistics-eval-framework}
+.
 Most of them will be clear from the context, but I will expand on some of them.
 Under \emph{Approach}$\to$\emph{Usage} are the categories Automation System and Decision support system (DSS).
 This is a recurring theme in multiagent logistics and traffic management systems.
@@ -440,7 +446,7 @@ We've seen similar examples of this with the LTAs and CTAs in the France paper.
 My agents are designed similarly.
 But this is the first term I've found to describe agent partitioning based on role.
 
-The Taxis and Fares system is described according to the Davidsson classification scheme in table~\ref{tab:classifying-taxis-and-fares-sim}.
+The Taxis and Fares system is described according to the Davidsson classification scheme in table~\ref{tab:classifying-taxis-and-fares-sim} on page~\pageref{tab:classifying-taxis-and-fares-sim}.
 All six simulation types are listed.
 Most of the data in the table is identical across all my simulations.
 This is maybe not surprising, since they are all part of the same system.
@@ -448,153 +454,97 @@ The only difference is between the cooperative and competitive NPs: the cooperat
 
 % Table generated by Excel2LaTeX from sheet 'txport-logistics-eval-framework'
 \begin{table}[htbp]
-  \centering
+    \centering
     \begin{tabular}{|l|p{0.25\textwidth}|p{0.37\textwidth}|}
     \addlinespace
-    \hline
-    %\toprule
-          & \textbf{Aspect} & \textbf{Categories} \\
-    %midrule
-    \hline
-    \hline
-    \textbf{Problem Description} & Domain & 1. Transport \\
-          &       & 2. Traffic \\
-          &       & 3. Terminal \\
-          %\hline
-          \cline{2-3}
-          & Transport mode & 1. Air \\
-          &       & 2. Rail \\
-          &       & 3. Road \\
-          &       & 4. Sea \\
-          &       & 5. Intermodal \\
-          %\hline
-          \cline{2-3}
-          & Time horizon & 1. Operational \\
-          &       & 2. Tactical \\
-          &       & 3. Strategical \\
-          \hline
-          %\cline{2-3}
+    \hline & \textbf{Aspect} & \textbf{Categories} \\
+    \hline\hline
+    \begin{minipage}[t]{2.5cm}\textbf{Problem \newline Description}\end{minipage} & Domain & 1. Transport \\
+        &       & 2. Traffic \\
+        &       & 3. Terminal \\
+    \cline{2-3}
+        & Transport mode & 1. Air \\
+        &       & 2. Rail \\
+        &       & 3. Road \\
+        &       & 4. Sea \\
+        &       & 5. Intermodal \\
+    \cline{2-3}
+        & Time horizon & 1. Operational \\
+        &       & 2. Tactical \\
+        &       & 3. Strategical \\
+        \hline
     \textbf{Approach} & Usage & 1. Automation system \\
-          &       & 2. Decision support system \\
-          %\hline
-          \cline{2-3}
-          & Control & 1. Centralized \\
-          &       & 2. Distributed \\
-          %\hline
-          \cline{2-3}
-          & MAS Structure & 1. Static \\
-          &       & 2. Dynamic \\
-          %\hline
-          \cline{2-3}
-          & Agent attitude & 1. Benevolent \\
-          &       & 2. Selfish \\
-          %\hline
-          \cline{2-3}
-          & Agent architecture & 1. Reactive \\
-          &       & 2. Deliberative \\
-          &       & 3. Hybrid \\
-          \hline
-          %\cline{2-3}
+        &       & 2. Decision support system \\
+    \cline{2-3} & Control & 1. Centralized \\ &       & 2. Distributed \\
+    \cline{2-3} & MAS Structure & 1. Static \\ &       & 2. Dynamic \\
+    \cline{2-3} & Agent attitude & 1. Benevolent \\ &       & 2. Selfish \\
+    \cline{2-3}
+        & Agent architecture & 1. Reactive \\
+        &       & 2. Deliberative \\
+        &       & 3. Hybrid \\
+    \hline
     \textbf{Results} & Maturity & 1. Conceptual proposal \\
-          &       & 2. Simulation experiment \\
-          &       &   2.1. artificial data \\
-          &       &     2.1.1. limited/partial \\
-          &       &     2.1.2. full scale \\
-          &       &   2.2. real data \\
-          &       &     2.2.1. limited/partial \\
-          &       &     2.2.2. full scale \\
-          &       & 3. Field experiment \\
-          &       &   3.1. limited/partial \\
-          &       &   3.2. full scale \\
-          &       & 4. Deployed system \\
-          %\hline
-          \cline{2-3}
-          & Eval comparison & 1. None \\
-          &       & 2. Qualitative \\
-          &       & 3. Quantitative \\
-    %\bottomrule
+        &       & 2. Simulation experiment \\
+        &       &   2.1. artificial data \\
+        &       &     2.1.1. limited/partial \\
+        &       &     2.1.2. full scale \\
+        &       &   2.2. real data \\
+        &       &     2.2.1. limited/partial \\
+        &       &     2.2.2. full scale \\
+        &       & 3. Field experiment \\
+        &       &   3.1. limited/partial \\
+        &       &   3.2. full scale \\
+        &       & 4. Deployed system \\
+    \cline{2-3}
+        & Eval comparison & 1. None \\
+        &       & 2. Qualitative \\
+        &       & 3. Quantitative \\
     \hline
     \end{tabular}%
-  \caption{Summary of transportation logistics evaluation framework}
-  \label{tab:transport-logistics-eval-framework}%
+    \caption{Summary of transportation logistics evaluation framework}
+    \label{tab:transport-logistics-eval-framework}%
 \end{table}%
 
 % Table generated by Excel2LaTeX from sheet 'classifying-taxis-and-fares-sim'
 \begin{table}[htbp]
-  \centering
-    \begin{tabular}{|l|p{0.26\textwidth}|p{0.18\textwidth}|p{0.18\textwidth}|p{0.18\textwidth}|}
-    %\begin{tabular}{|l|l|l|l|l|}
+\centering
+\begin{tabular}{|p{0.17\textwidth}|p{0.22\textwidth}|p{0.17\textwidth}|p{0.17\textwidth}|p{0.17\textwidth}|}
     \addlinespace
-    \hline
-    %\toprule
-          %&       & \textbf{Cooperative/FIFO} & \textbf{Cooperative/CF} & \textbf{Cooperative/MM} \\
-          &       & \emph{\textbf{Coop/FIFO}} & \emph{\textbf{Coop/CF}} & \emph{\textbf{Coop/MM}} \\
-          \hline
-          \hline
-    %\midrule
-    \textbf{Problem Description} & Domain & Traffic & Traffic & Traffic \\
-          \cline{2-5}
-          & Transport mode & Road  & Road  & Road \\
-          \cline{2-5}
-          & Time horizon & Operational & Operational & Operational \\
-          \hline
-    \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
-          \cline{2-5}
-          & Control type & Distributed & Distributed & Distributed \\
-          \cline{2-5}
-          & MAS structure & Static & Static & Static \\
-          \cline{2-5}
-          & Agent attitude & Benevolent & Benevolent & Benevolent \\
-          \cline{2-5}
-          & Agent architecture & Reactive & Reactive & Reactive \\
-          \hline
-    \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
-          \cline{2-5}
-          & Eval comparison & Qualitative & Qualitative & Qualitative \\
-          \hline
-          \hline
-          \cline{2-5}
-          %\\[3pt]
-          %\vspace{4.8mm}
-%    \end{tabular}%
-%  \caption{Classifying the Taxis and Fares simulation, part 1}
-%\end{table}%
-%
-%\begin{table}[htbp]
-%  \centering
-%    %\begin{tabular}{|l|p{0.16\textwidth}|p{0.16\textwidth}|p{0.16\textwidth}|p{0.16\textwidth}|}
-%    \begin{tabular}{|l|l|l|l|l|}
-%    \addlinespace
-%    \hline
-%    %\toprule
-%          %&       & \textbf{Competitive/FIFO} & \textbf{Competitive/CF} & \textbf{Competitive/MM} \\
-          &       & \emph{\textbf{Comp/FIFO}} & \emph{\textbf{Comp/CF}} & \emph{\textbf{Comp/MM}} \\
-          \hline
-          \hline
-    \textbf{Problem Description} & Domain & Traffic & Traffic & Traffic \\
-          \cline{2-5}
-          & Transport mode & Road  & Road  & Road \\
-          \cline{2-5}
-          & Time horizon & Operational & Operational & Operational \\
-          \hline
-    \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
-          \cline{2-5}
-          & Control type & Distributed & Distributed & Distributed \\
-          \cline{2-5}
-          & MAS structure & Static & Static & Static \\
-          \cline{2-5}
-          & Agent attitude & Selfish & Selfish & Selfish \\
-          \cline{2-5}
-          & Agent architecture & Reactive & Reactive & Reactive \\
-          \hline
-    \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
-          \cline{2-5}
-          & Eval comparison & Qualitative & Qualitative & Qualitative \\
-    %\bottomrule
-    \hline
-    \end{tabular}%
-  \caption{Classifying the Taxis and Fares simulation}
-  \label{tab:classifying-taxis-and-fares-sim}%
+        \hline &       & \emph{\textbf{Coop/FIFO}} & \emph{\textbf{Coop/CF}} & \emph{\textbf{Coop/MM}} \\
+        \hline
+        \hline
+        \begin{minipage}[t]{2.3cm}\textbf{Problem \newline Description}\end{minipage} & Domain & Traffic & Traffic & Traffic \\
+        \cline{2-5} & Transport mode & Road  & Road  & Road \\
+        \cline{2-5} & Time horizon & Operational & Operational & Operational \\
+        \hline
+        \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
+        \cline{2-5} & Control type & Distributed & Distributed & Distributed \\
+        \cline{2-5} & MAS structure & Static & Static & Static \\
+        \cline{2-5} & Agent attitude & Benevolent & Benevolent & Benevolent \\
+        \cline{2-5} & \begin{minipage}[t]{2.3cm}Agent \newline Architecture\end{minipage} & Reactive & Reactive & Reactive \\[2.5ex]
+        \hline
+        \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
+        \cline{2-5} & Eval comparison & Qualitative & Qualitative & Qualitative \\
+        \hline\\[2ex]
+        \cline{1-5} &       & \emph{\textbf{Comp/FIFO}} & \emph{\textbf{Comp/CF}} & \emph{\textbf{Comp/MM}} \\
+        \hline
+        \hline
+        \begin{minipage}[t]{2.3cm}\textbf{Problem \newline Description}\end{minipage} & Domain & Traffic & Traffic & Traffic \\
+        \cline{2-5} & Transport mode & Road  & Road  & Road \\
+        \cline{2-5} & Time horizon & Operational & Operational & Operational \\
+        \hline
+        \textbf{Approach} & Usage & Automation system & Automation system & Automation system \\
+        \cline{2-5} & Control type & Distributed & Distributed & Distributed \\
+        \cline{2-5} & MAS structure & Static & Static & Static \\
+        \cline{2-5} & Agent attitude & Selfish & Selfish & Selfish \\
+        \cline{2-5} & \begin{minipage}[t]{2.3cm}Agent \newline Architecture\end{minipage} & Reactive & Reactive & Reactive \\[2.5ex]
+        \hline
+        \textbf{Results} & Maturity & 2.2.1 & 2.2.1 & 2.2.1 \\
+        \cline{2-5} & Eval comparison & Qualitative & Qualitative & Qualitative \\
+        \hline
+        \end{tabular}%
+        \caption{Classifying the Taxis and Fares simulation}
+    \label{tab:classifying-taxis-and-fares-sim}%
 \end{table}%
 
 \marginpar{old comment: Modi - ADOPT: Asynchronous Distributed Constraint Optimization with Quality Guarantees}
@@ -669,7 +619,7 @@ Process objects must provide a method called the Process Execution Method (PEM) 
 When the PEM exits, the Process object is destroyed.
 The PEM is where the simulated object's behaviors are defined.
 
-\section{Fares}
+\subsection{Fares}
 The lifecycle of a Fare is relatively simple.
 It begins when the Fare is created, and ends when it is dropped off at its destination by a Taxi, or the simulation ends, whichever comes first.
 Fares are created throughout the simulation.
@@ -678,7 +628,7 @@ The Fare uses the same PEM for all simulations.
 It collects timestamped event data starting with the initial request for pickup; then again when it is picked up; and finally when it is dropped off.
 Depending on the NP, other events may be logged as well.
 
-\section{Taxis}
+\subsection{Taxis}
 The Taxi class is more complex than the Fares, as it defines multiple SimPy PEMs corresponding to the different negotiation protocols and simulation types.
 Superficially, that is leaving the NPs and simtypes aside for now, the lifecycle of the Taxis is complementary to that of the Fares.
 Taxis are created at the beginning of the simulation, and persist until the simulation ends.
@@ -717,18 +667,17 @@ If the second Taxi drops off his Fare and reaches the Fare first, the first Taxi
 Therefore, I decided to leave it out.
 
 \marginpar{Add something about the NPs being SimPy filter functions, and how they behave.}
+\section{Negotiation Protocols and Simulation Types}
 There are three negotiation protocols or NPs (my phrase).
 They are similar in concept, but with different implementations, for the cooperative and competitive simulations.
 The combination of negotiation protocol and simType identifies the major characteristics of a simulation.
 The combinations are
 
-\vspace{0.5cm}
 \begin{itemize}
   \item{FIFO/comperative \& FIFO/competitive}
   \item{closestFare/comperative \& closestFare/competitive}
   \item{mixedMode/comperative \& mixedMode/competitive}
 \end{itemize}
-\vspace{0.5cm}
 
 Any simulation uses exactly one of them.
 It is specified in the agent configuration file \todo{[sec:The-agents-default.ini]}.\todo{What's a TextPage?}
@@ -874,7 +823,7 @@ Suspendisse ultrices sollicitudin nunc.
 
 % appendices %
 \appendix
-\chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} data}
+\chapter{Using TIGER/Line\textsuperscript{\scriptsize{\copyright}} Data}
 \framebox[4in][c]{\parbox[t]{4in}{Note: This section only applies if you are planning on using the geographical graphs for your simulations.
 It's more work, but you get more realistic simulations.}}
 \vspace{0.5cm}
